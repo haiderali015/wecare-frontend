@@ -1,5 +1,6 @@
 import React from 'react'
 import "./HomePage.css";
+import {Link} from 'react-router-dom';
 
 const navbar = () => {
     return (
@@ -12,8 +13,8 @@ const navbar = () => {
                     </div>
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-                            <li><a className="nav-link scrollto active" href="/home">Home</a></li>
-                            <li><a className="nav-link scrollto" href="#about">About Us</a></li>
+                            <li><Link to="/"><a className="nav-link scrollto active" href="/home">Home</a></Link></li>
+                            <li><Link to="/about"><a className="nav-link scrollto" href="#about">About Us</a></Link></li>
                             <li><a className="nav-link scrollto" href="#speakers">Our Plans</a></li>
                             <li><a className="nav-link scrollto" href="#schedule">Contact Us</a></li>
                         </ul>
