@@ -12,7 +12,7 @@ const navbar = () => {
                     </div>
                     <nav id="navbar" className="navbar order-last order-lg-0">
                         <ul>
-                            <li><a className="nav-link scrollto active" href="#hero">Home</a></li>
+                            <li><a className="nav-link scrollto active" href="/home">Home</a></li>
                             <li><a className="nav-link scrollto" href="#about">About Us</a></li>
                             <li><a className="nav-link scrollto" href="#speakers">Our Plans</a></li>
                             <li><a className="nav-link scrollto" href="#schedule">Contact Us</a></li>
