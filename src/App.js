@@ -3,7 +3,7 @@ import React from 'react';
 import WelcomePage from './components/WelcomePage'
 import Homepage from './components/Homepage';
 import Navbar from './components/navbar';
-import{BrowserRouter, Routes ,Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
@@ -14,20 +14,15 @@ import { Home } from '@mui/icons-material';
 function App() {
   return (
     <>
-{/*     
-    <BrowserRouter>
-    <div className="App">
-    <Navbar/>
-    <Routes>
-    <Route path='/' element={<Homepage/>} />
-    <About/>
-    </Routes>
-     </div>
-     </BrowserRouter>
-      */}
-
-      <Navbar/>
-      <About/>
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Homepage />} />
+          <Route path='/about' element={<About />} />
+          {/* <Route path='/signup' element={<Patientregister />} /> */}
+          <About />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
