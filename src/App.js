@@ -9,25 +9,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
 import Patientregister from './components/Patientregister';
 import { Home } from '@mui/icons-material';
+import ContactUs from './components/ContactUs';
+import Signin from './components/Signin';
 
 
 function App() {
   return (
     <>
-{/*     
-    <BrowserRouter>
+    
     <div className="App">
+    <BrowserRouter>
     <Navbar/>
     <Routes>
     <Route path='/' element={<Homepage/>} />
-    <About/>
-    </Routes>
-     </div>
-     </BrowserRouter>
-      */}
+    <Route path='/about' element={<About/>} />
+    <Route path='/signup' element={<Patientregister/>} />
+    <Route path='/contactus' element={ <ContactUs/>} />
+    <Route path='/signin' element={ <Signin/>} />
 
-      <Navbar/>
-      <About/>
+
+    </Routes>
+    </BrowserRouter>
+     </div>
     </>
   );
 }
