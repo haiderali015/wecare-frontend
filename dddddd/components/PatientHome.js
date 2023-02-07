@@ -19,18 +19,12 @@ const PatientHome = () => {
         <Grid item>
           <DCard />
         </Grid>
-        <Grid item>
-          <DCard />
-        </Grid>
       </Grid>
       <Grid container justifyContent="space-evenly" my={2}>
         <Grid item >
           <DCard />
         </Grid>
         <Grid item >
-          <DCard />
-        </Grid>
-        <Grid item>
           <DCard />
         </Grid>
         <Grid item>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './navbar';
-import Footer from './Footer';
 
 const Signin = () => {
   return (
@@ -30,7 +29,6 @@ const Signin = () => {
             </div>
         </div>
     </div>
-    <Footer/>
     </>
   )
 }

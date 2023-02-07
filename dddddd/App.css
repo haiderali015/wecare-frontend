@@ -1,0 +1,17 @@
+
+
+body
+{
+  background-color: #cae5f8 !important;
+}
+.page-width
+{
+  margin:50px 25%;
+}
+.scrolling_cont {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrolling_cont::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
