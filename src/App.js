@@ -15,7 +15,6 @@ import MakeAppointment from './components/MakeAppointent';
 import { GlobalStyle } from "./GlobalStyles";
 import { ThemeProvider } from "styled-components";
 import Sidebar from './components/Pharmacy/Sidebar.jsx';
-import Dashboard from './components/Pharmacy/Dashboard.jsx';
 import Invoice from './components/Pharmacy/Invoice.jsx';
 import Customer from './components/Pharmacy/Customer.jsx';
 import Medicine from './components/Pharmacy/Medicine.jsx';
@@ -25,6 +24,7 @@ import { Outlet } from 'react-router-dom';
 import Doctor from './components/Doctor/Doctor';
 import Sidenav from "./components/Pharmacy/Sidenav"
 import Main from './components/Main';
+import EditMedicine from './components/Pharmacy/EditMedicine';
 
 const SidebarLayout = () => (
   <>
@@ -73,6 +73,8 @@ function App() {
             <Route path='/makeappointment' element={<MakeAppointment />} />
             <Route path='/Doctor' element={<Doctor />} />
             <Route path='/Pharmacy' element={<Sidenav />} />
+            <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
+
 
 
 

@@ -23,6 +23,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react';
 import Invoice  from '../Pharmacy/Invoice';
 import CalculateBill  from '../Pharmacy/CalculateBill';
+import AddMedicine  from '../Pharmacy/AddMedicine';
+
 import Medicine  from '../Pharmacy/Medicine';
 import logo from "./wecarelogo.png";
 import { Button} from '@material-ui/core';
@@ -203,6 +205,32 @@ export default function Sidenav() {
             </ListItem>
 
 
+
+
+
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("addMedicine")}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    fontSize:"35px"
+                  }}
+                >
+                 <MedicationIcon/>
+                </ListItemIcon>
+                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Add Medicine"}/>
+              </ListItemButton>
+            </ListItem>
+
+
         </List>
         <Divider />
         
@@ -211,6 +239,8 @@ export default function Sidenav() {
         {menudata=="Invoice" && <Invoice/>}
         {menudata=="CalculateBill" && <CalculateBill/>}
         {menudata=="Inventory" && <Medicine/>}
+        {menudata=="addMedicine" && <AddMedicine/>}
+
 
       </Box>
     </Box>

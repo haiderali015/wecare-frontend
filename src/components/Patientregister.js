@@ -1,18 +1,84 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@material-ui/core'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Navbar from './navbar';
 import MyBackgroundImage from '../assets/signupimage.jpg';
 import Footer from './Footer';
 import { Navigate } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom'
+import { adddata } from './context/ContextProvider.js';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
 
     const [gotosignin, setgotosignin] = useState(false);
+    // const { udata, setUdata } = useContext(adddata);
+
+    const navigate = useNavigate();
+
+    const [inpval, setINP] = useState({
+        name: "",
+        cnic: "",
+        phonenumber: "",
+        password: "",
+       })
+
+    const setdata = (e) => {
+        console.log(e.target.value);
+        const { name, value } = e.target;
+        setINP((preval) => {
+            return {
+                ...preval,
+                [name]: value
+            }
+        })
+    }
+
+
+    const addinpdata = async (e) => {
+        e.preventDefault();
+
+        const { name, cnic, phonenumber, password} = inpval;
+
+
+        if (name === "") {
+            alert("name is required")
+        } else if (cnic === "") {
+            alert("Cnic is required")
+        } else if (phonenumber=== "") {
+            alert("phonenumber is required")
+        } else if (password === "") {
+            alert("Password is required")
+        } 
+        else {
+
+            const res = await fetch("/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name, cnic, phonenumber, password
+                })
+            });
+
+            const data = await res.json();
+            console.log(data);
+
+            if (res.status === 422 || !data) {
+                console.log("error ");
+                alert("error");
+
+            } else {
+                navigate('/signin')
+                // setUdata(data)
+                console.log("data added");
+
+            }
+        }
+
+    }
+
     if (gotosignin) {
         return <Navigate to="/signin" />
     }
@@ -34,6 +100,7 @@ const Login = () => {
                     </Grid>
                     <TextField
                         hiddenLabel
+                        value={inpval.name} onChange={setdata} name="name"
                         id="filled-hidden-label-normal"
                         placeholder='Name'
                         variant="filled"
@@ -41,6 +108,7 @@ const Login = () => {
                     />
                     <TextField
                         hiddenLabel
+                        value={inpval.cnic} onChange={setdata} name="cnic"
                         id="filled-hidden-label-normal"
                         placeholder='CNIC'
                         variant="filled"
@@ -48,6 +116,7 @@ const Login = () => {
                     />
                     <TextField
                         hiddenLabel
+                        value={inpval.phonenumber} onChange={setdata} name="phonenumber"
                         id="filled-hidden-label-normal"
                         placeholder='Ph Number'
                         variant="filled"
@@ -55,22 +124,13 @@ const Login = () => {
                     />
                     <TextField
                         hiddenLabel
+                        value={inpval.password} onChange={setdata} name="password"
                         id="filled-hidden-label-normal"
                         placeholder='Password'
                         variant="filled"
                         style={{ width: 350, marginTop: "5px" }}
                     />
-
-                    {/* <FormControlLabel
-                        control={
-                            <Checkbox
-                                name="checkedB"
-                                color="primary"
-                            />
-                        }
-                        label="Remember me"
-                    /> */}
-                    <Button type='submit' color='primary' variant="contained" style={btnstyle}>Continue</Button>
+                    <Button type='submit' onClick={addinpdata} color='primary' variant="contained" style={btnstyle}>Continue</Button>
 
                     <Typography style={{ marginTop: "-30px", marginLeft: "110px", fontSize: "1.4rem" }} > Already have an account ?
                         <Button style={{color:"black"}} variant="none" color="primary" onClick={() => { setgotosignin(true) }}>Sign In</Button>
