@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './navbar';
 import Footer from './Footer';
+import Axios from 'axios';
+
 
 const Signin = () => {
+    const [username,setUsername]=useState("")
+    const [password,setPassword]=useState("")
+
+    const login =()=>{
+        Axios.post("http://localhost:8001/login", {
+            username:username,
+            password:password,
+    }).then ((response)=>{
+        console.log(response);
+    })
+    }
+
   return (
         <><Navbar/>
 
@@ -12,12 +26,12 @@ const Signin = () => {
             <div className="col-sm-6 col-md-4 col-md-offset-4">
                 <h1 className="text-center login-title" style={{ fontFamily: "Lucida Handwriting", textDecoration: "none" }}>Sign in to continue to <span style={{ color:"white", fontWeight: 'bold' }}>We</span><span style={{ fontWeight: 'bold' }}>Care</span></h1>
                 <div className="account-wall">
-                    <img className="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                    <img className="profile-img" src="https://www.citypng.com/public/uploads/preview/-115891627739whel2jtx7.png"
                         alt=""/>
-                    <form className="form-signin">
-                    <input type="text" className="form-control" placeholder="Email" required autofocus/>
-                    <input type="password" className="form-control" placeholder="Password" required/>
-                    <button className="btn btn-lg btn-primary btn-block" type="submit">
+                    <form className="form-signin" action='/' method='POST'>
+                    <input type="text" className="form-control" placeholder="name" style={{textTransform:"lowercase" }} onChange={(e)=>{setUsername(e.target.value)}} autofocus required/>
+                    <input type="password" className="form-control" placeholder="Password" style={{textTransform:"lowercase" }} onChange={(e)=>{setPassword(e.target.value)}} required/>
+                    <button className="btn btn-lg btn-primary btn-block" value="LOGIN" onClick={login}>
                         Sign in</button>
                     <label className="checkbox pull-left">
                         <input type="checkbox" value="remember-me"/>
