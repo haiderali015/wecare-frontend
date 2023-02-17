@@ -25,6 +25,8 @@ import Doctor from './components/Doctor/Doctor';
 import Sidenav from "./components/Pharmacy/Sidenav"
 import Main from './components/Main';
 import EditMedicine from './components/Pharmacy/EditMedicine';
+import Profilesettings from './components/patient/Profilesettings';
+import PatientProfile from './components/patient/PatientProfile';
 
 const SidebarLayout = () => (
   <>
@@ -75,6 +77,8 @@ function App() {
             <Route path='/Pharmacy' element={<Sidenav />} />
             <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
 
+            <Route path='/settings' element={<Profilesettings/>} />
+            <Route path='/myprofile' element={<PatientProfile/>} />
 
 
 
