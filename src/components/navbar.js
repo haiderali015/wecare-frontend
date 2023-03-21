@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react'
 import "./PatientHome.css";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,7 +14,7 @@ import { Link } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { fontSize } from '@mui/system';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -40,6 +40,8 @@ const styles = theme => ({
 function navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [gotosignin, setgotosignin] = useState(false);
+
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -55,6 +57,9 @@ function navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    if (gotosignin) {
+        return <Navigate to="/signin" />
+    }
 
     return (
         <AppBar position="static">
@@ -150,7 +155,8 @@ function navbar() {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Register Yourself">
-                        <Link href="/signin"  style={{textDecoration:"none" }}><Button  variant="contained" color="primary" style={{fontSize:"10px" }}>Login</Button></Link>
+                        <Button style={{color:"white"}} variant="none" color="primary" onClick={() => { setgotosignin(true) }}>Sign In</Button>
+                        {/* <Link href="/signin"  style={{textDecoration:"none" }}><Button  variant="contained" color="primary" style={{fontSize:"10px" }}>Login</Button></Link> */}
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}

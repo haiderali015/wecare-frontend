@@ -450,7 +450,7 @@
 
 .spinner span {
   font-size: 2rem;
-  animation: fade 4s linear 0s infinite;
+  animation: fade 1s linear 0s infinite;
   padding-right: 1rem;
 }
 

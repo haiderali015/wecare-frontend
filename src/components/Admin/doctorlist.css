@@ -1,0 +1,28 @@
+.btn-add-doctor {
+    width: 200px;
+    height: 50px;
+    margin-right: 10px;
+    font-size: 25px;
+  }
+  
+  .doctors-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .doctors-table th {
+    font-size: 17px;
+  }
+  
+  .doctors-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .doctors-actions button {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  

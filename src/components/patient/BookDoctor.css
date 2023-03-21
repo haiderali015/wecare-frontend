@@ -1,0 +1,224 @@
+.doc-detail-slots-inner {
+    position: relative;
+}
+
+.timing-selection-wrap {
+    padding: 32px 0px 0px;
+    width: 686px;
+}
+
+/* .timing-selection-wrap::after{
+// content: "";
+// background: #E1E4E8;
+// width: 100%;
+// height: 2px;
+// position: absolute;
+
+}  */
+@media(max-width: 768px) {
+    .timing-selection-wrap {
+        width: 100%;
+    }
+}
+
+.timing-selection-wrap .heading {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #121314;
+}
+
+.timing-selection-wrap .timing-slider-wrap {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.timing-selection-wrap .timing-slider-wrap .slide-arrow {
+    position: absolute;
+    top: 30px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    display: flex;
+    z-index: 3;
+    background: #FFFFFF;
+    border: 1px solid #1E4275;
+    /* box-shadow: 0px 1px 4px rgb(0 0 0 / 25%); */
+    width: 26px;
+    height: 26px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+@media(max-width: 768px) {
+    .timing-selection-wrap .timing-slider-wrap .slide-arrow {
+        display: none;
+    }
+}
+
+.timing-selection-wrap .timing-slider-wrap .doc-slider-arrow-left {
+    left: 11px;
+}
+
+.timing-selection-wrap .timing-slider-wrap ul {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0px 48px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    margin-left: -1px;
+    margin-right: -1px;
+
+}
+
+@media(max-width: 768px) {
+    .timing-selection-wrap .timing-slider-wrap ul {
+        overflow: scroll;
+    }
+}
+
+.timing-slider-wrap ul li {
+    white-space: nowrap;
+    overflow: auto;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 1px;
+    margin-right: 1px;
+    vertical-align: top;
+    /* // width: calc(33.333333333% - 2px); */
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #C8CBD0;
+    margin-right: 24px;
+
+}
+
+.timing-slider-wrap .doc-slider-arrow-right {
+    right: 17px;
+}
+
+.timing-slider-wrap ul li.active {
+    background: #FFD9DF;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #FFD9DF;
+}
+
+.timing-slider-wrap ul li.active span {
+    color: #2F3135;
+}
+
+.timing-slider-wrap ul li .available {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #7A7E83;
+}
+
+.timing-slider-wrap ul li h5 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #17191B;
+    margin: 0;
+}
+
+.timing-slider-wrap ul li .timing_slider_block {
+    padding-top: 3px;
+    text-align: center;
+}
+
+/*timing slots*/
+/* .timing-selection-wrap .timing-slot-wrap{
+
+} */
+.timing-slot-block .timing-slot-left {
+    display: none;
+}
+
+.timing-slot-right .heading {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #121314;
+    margin-bottom: 16px;
+}
+
+.timing-slot-right ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-bottom: 16px;
+}
+
+.timing-slot-right ul li {
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #1E4275;
+    padding-top: 10px;
+    border: 1px solid #DCE8FA;
+    border-radius: 6px;
+    width: 116px;
+    height: 43px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+@media(max-width: 768px) {
+    .timing-slot-right ul li {
+        width: 110px;
+        margin-right: 12px;
+        margin-bottom: 12px;
+    }
+}
+
+@keyframes border-animation2 {
+    0% {
+        border: 1px solid #c0c0c0;
+        background-color: #fff;
+        box-shadow: 0px 0px7 0px 1px #fff;
+        color: #161616;
+    }
+
+    70% {
+        border: 1px solid #1E4275;
+        background-color: #1E4275;
+        box-shadow: 0px 0px 0px 1px #1E4275;
+        color: #fff;
+    }
+
+    100% {
+        border: 1px solid #1E4275;
+        background-color: #1E4275;
+        box-shadow: 0px 0px 0px 1px #1E4275;
+        color: #fff;
+    }
+}
+
+.blink {
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .7s;
+    display: block;
+    animation-name: border-animation2;
+    animation-duration: .7s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: 14;
+    animation-direction: alternate;
+    background: #1e4275;
+    color: #fff !important;
+}

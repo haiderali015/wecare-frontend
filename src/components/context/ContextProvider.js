@@ -26,3 +26,33 @@ const ContextProvider = ({ children }) => {
 }
 
 export default ContextProvider;
+
+
+
+
+
+
+// import React, { createContext, useState } from 'react'
+
+// export const DataContext = createContext({
+//   udata: '',
+//   updata: '',
+//   dltdata: ''
+// });
+
+// const ContextProvider = ({ children }) => {
+
+//   const [udata, setUdata] = useState('');
+//   const [updata, setUPdata] = useState('');
+//   const [dltdata, setDLTdata] = useState('');
+
+//   const data = { udata, updata, dltdata };
+
+//   return (
+//     <DataContext.Provider value={{ ...data, setUdata, setUPdata, setDLTdata }}>
+//       {children}
+//     </DataContext.Provider>
+//   )
+// }
+
+// export default ContextProvider;

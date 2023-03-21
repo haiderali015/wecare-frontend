@@ -38,7 +38,44 @@ const theme = createTheme();
 
 export default function Doctor() {
   const [patient,setPatient]=React.useState("");
-
+  const {id}=1;
+  const [app,setApp]=React.useState([]);
+  const [data,setData]=React.useState({id:1,Diagnosis:"",Allergies:"",Medicines:[{Name:"",Quantity:"",Duration:""}],Notes:""});
+  const saveapp= async ()=>
+  {
+      const res = await fetch(`http://localhost:8001/appointments/1`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            data
+        })
+      });
+      const data = await res.json();
+      if (res.status === 422 || !data) {
+          console.log("error ");
+      } else {
+      }
+  }
+  const getAppoints= async ()=>
+  {
+      const res = await fetch(`http://localhost:8001/appointments/1`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          },
+      });
+      const data = await res.json();
+      if (res.status === 422 || !data) {
+          console.log("error ");
+      } else {
+          setApp(data);
+      }
+  }
+React.useEffect(()=>{
+  getAppoints();
+},[]);
   const [activeStep, setActiveStep] = React.useState(0);
 
   function getStepContent(step) {
@@ -46,7 +83,7 @@ export default function Doctor() {
       case 0:
         return <AddressForm props={patient}/>;
       case 1:
-        return <PaymentForm />;
+        return <PaymentForm props={[data,setData]}/>;
       case 2:
         return <Review />;
       default:
@@ -76,14 +113,15 @@ export default function Doctor() {
           // onClick={toggleDrawer(anchor, false)}
           // onKeyDown={toggleDrawer(anchor, false)}
         >
-          <List style={{fontSize:"20px"}}>
-            {[{name:'Zuhad Ul Hadi',timing:"8:00"},{name:'Haider Ali',timing:"9:00"}, {name:'Daud Asif',timing:"16:00"}].map((text, index) => (
-              <ListItem key={text.name} disablePadding>
-                <ListItemButton onClick={()=>{setPatient(text.name)}}>
-                  <ListItemText primary={text.name} />
-                  <span>{text.timing}</span>
-                </ListItemButton>
-              </ListItem>
+          <List style={{fontSize:"24px"}} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {app.map((text, index) => (
+             new Date(text.Time).getDate() ==new Date().getDate() ?
+             <ListItem key={text.patient} disablePadding>
+             <ListItemButton onClick={()=>{setPatient(text.patient)}}>
+               <ListItemText primary={text.patient.toUpperCase()} />
+               <span>{new Date(text.Time).getHours()}:00</span>
+             </ListItemButton>
+           </ListItem>:<></>
             ))}
           </List>
         </Box>

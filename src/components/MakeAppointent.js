@@ -1,11 +1,11 @@
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { Avatar, Grid, Typography, Chip, Divider, Box, Button, Card, CardContent } from '@mui/material';
 import React from 'react'
-import DCard from './Cards';
+import DCard from './Patient/Cards';
 import Navbar2 from './Navbar2'
 import "./PatientHome.css";
 
-const MakeAppointment = () => {
+const Booking = () => {
   function leftClicked() {
     // document.getElementById('scrolltimline').scrollBy(30, 0); // for right scroll
     document.getElementById('scrolltimline').scrollBy(-30, 0); // for left scroll
@@ -87,4 +87,4 @@ const MakeAppointment = () => {
   )
 }
 
-export default MakeAppointment;
+export default Booking;

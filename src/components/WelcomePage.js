@@ -3,6 +3,7 @@ import Homepage from "./Homepage";
 import "./HomePage.css";
 import Patientregister from './Patientregister'
 import Navbar from './navbar';
+import PatientHome from "./Patient/PatientHome";
 
 function WelcomePage() {
   const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ function WelcomePage() {
   }, []);
 
   return (
-        <><Navbar/>
+        <>
 
       {!completed ? (
         <>
@@ -41,7 +42,7 @@ function WelcomePage() {
         </>
       ) : (
         <>
-        <Homepage/>
+        <PatientHome/>
         </>
       )}
     </>

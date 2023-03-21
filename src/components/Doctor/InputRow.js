@@ -17,6 +17,7 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
+                    onChange={handleChange}
                     id="cardName"
                     label="Medicine Name"
                     fullWidth
@@ -27,6 +28,7 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
+                    onChange={handleChange}
                     id="cardNumber"
                     label="Quantity"
                     fullWidth
@@ -37,6 +39,7 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
+                    onChange={handleChange}
                     id="expDate"
                     label="Duration"
                     fullWidth
@@ -47,6 +50,7 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
+                    onChange={handleChange}
                     id="cvv"
                     label="consumption Ex: 3 Times a day/8 hourly"
                     fullWidth

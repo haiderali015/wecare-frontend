@@ -6,10 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
 import Patientregister from './components/Patientregister';
-import { Home } from '@mui/icons-material';
 import ContactUs from './components/ContactUs';
 import Signin from './components/Signin';
-import PatientHome from './components/PatientHome';
 import DoctorDetails from './components/DoctorDetails';
 import MakeAppointment from './components/MakeAppointent';
 import { GlobalStyle } from "./GlobalStyles";
@@ -25,9 +23,17 @@ import Doctor from './components/Doctor/Doctor';
 import Sidenav from "./components/Pharmacy/Sidenav"
 import Main from './components/Main';
 import EditMedicine from './components/Pharmacy/EditMedicine';
-import Profilesettings from './components/patient/Profilesettings';
-import PatientProfile from './components/patient/PatientProfile';
+import PatientHome from './components/Patient/PatientHome';
+import Booking from './components/Patient/BookDoctor';
+import Profilesettings from './components/Patient/Profilesettings';
+import PatientProfile from './components/Patient/PatientProfile';
 import DoctorSignin from './components/Doctor/DoctorSignin';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import SignInPharmacy from './components/Pharmacy/SigninPharmacy';
+import SigninDoctor from './components/Doctor/SigninDoctor';
+import Admin from './components/Admin/Admin';
+import Edit from './components/Admin/Edit';
+import AddDoctor from './components/Admin/AddDoctor';
 
 const SidebarLayout = () => (
   <>
@@ -71,25 +77,35 @@ function App() {
             <Route path='/signup' element={<Patientregister />} />
             <Route path='/contactus' element={<ContactUs />} />
             <Route path='/signin' element={<Signin />} />
-            <Route path='/patienthome' element={<PatientHome />} />
-            <Route path='/doctordetails' element={<DoctorDetails />} />
+            <Route path='/contactus' element={<ContactUs />} />
+            <Route path='/WelcomePage' element={<WelcomePage />} />
+
+            <Route path='/signinPharmacy' element={<SignInPharmacy />} />
+            <Route path='/signinDoctor' element={<SigninDoctor />} />
+
+            <Route path='/patienthome' element={<ProtectedRoutes Component={PatientHome} />} />
+            <Route path='/doctordetails' element={<ProtectedRoutes Component={DoctorDetails} />} />
+
+            <Route path='/Admin' element={<Admin />} />
+
+
+
+
             <Route path='/makeappointment' element={<MakeAppointment />} />
             <Route path='/Doctor' element={<Doctor />} />
-            <Route path='/DoctorLogin' element={<DoctorSignin/>} />
-
             <Route path='/Pharmacy' element={<Sidenav />} />
             <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
 
+            <Route path='/Admin/editDoctor/:id' element={<Edit/>} />
+            <Route path='/Admin/AddDoctor' element={<AddDoctor/>}/>
+            <Route path='/booking/:id' element={<Booking render={(params) => ({ ...params })}/>} />
+            <Route path='/hospitals/:city/:hospital' element={<PatientHome  render={(params) => ({ ...params })}/>} />
             <Route path='/settings' element={<Profilesettings/>} />
             <Route path='/myprofile' element={<PatientProfile/>} />
+            {/* <Route path='/NewS' element={<NewS/>} /> */}
 
+            <Route path='/DoctorLogin' element={<DoctorSignin />} />
 
-
-            {/* <Route path="/Pharmacy" element={<Dashboard />} />
-            <Route path="/customers" element={<Customer />} />
-            <Route path="/invoice" element={<Invoice />} />
-            <Route path="/medicines" element={<Medicine />} />
-            <Route path="/report" element={<Report />} />*/}
             <Route path="/bill" element={<CalculateBill />} /> 
           </Routes>
 

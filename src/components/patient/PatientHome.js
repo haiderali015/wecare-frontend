@@ -125,9 +125,9 @@ const PatientHome = (props) => {
           </Box>
         </Grid>
         <Grid item xs={7}>
-          {userdata.map((each, index) => {
-            return each.Name.toLowerCase().includes(searchVal.toLowerCase()) || each.Type.toLowerCase().includes(searchVal.toLowerCase()) ?
-              <Grid item m={5} key={index}>
+        {userdata.map((each, index) => {
+          return each.name && each.Type && each.name.toLowerCase().includes(searchVal.toLowerCase()) || each.Type.toLowerCase().includes(searchVal.toLowerCase()) ?
+            <Grid item m={5} key={index}>
                 <Card
                   sx={{
                     display: "flex",

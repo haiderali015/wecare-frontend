@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom';
 import "./medicine.css";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CreateIcon from '@mui/icons-material/Create';
@@ -13,6 +12,9 @@ import { updatedata } from '../context/ContextProvider'
 const Medicine = () => {
   const [getuserdata, setUserdata] = useState([]);
   console.log(getuserdata);
+  const shoot = () => {
+    alert("Great Shot!");
+  }
 
   const { udata, setUdata } = useContext(adddata);
 
@@ -20,27 +22,53 @@ const Medicine = () => {
 
   const { dltdata, setDLTdata } = useContext(deldata);
 
-  const deleteuser = async (id) => {
+//   const deleteuser = async (id) => {
 
-    const res2 = await fetch(`/deleteuser/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
+//     const res2 = await fetch(`/deleteuser/${id}`, {
+//         method: "DELETE",
+//         headers: {
+//             "Content-Type": "application/json"
+//         }
+//     });
 
-    const deletedata = await res2.json();
-    console.log(deletedata);
+//     const deletedata = await res2.json();
+//     console.log(deletedata);
 
-    if (res2.status === 422 || !deletedata) {
-        console.log("error");
-    } else {
-        console.log("user deleted");
-        setDLTdata(deletedata)
-        getdata();
+//     if (res2.status === 422 || !deletedata) {
+//         console.log("error");
+//     } else {
+//         console.log("user deleted");
+//         // setDLTdata(deletedata)
+//         // getdata();
+//     }
+
+// }
+
+
+const deleteuser = async (id) => {
+  const res2 = await fetch(`/deleteuser/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
     }
+  });
 
+  const deletedata = await res2.json();
+  console.log(deletedata);
+
+  if (res2.status === 422 || !deletedata) {
+    console.log("error");
+  } else {
+    console.log("Medicine deleted");
+    // setDLTdata(deletedata);
+    setUserdata(getuserdata.filter((pharmacy1) => pharmacy1.id !== id)); // remove deleted doctor from state
+  }
 }
+
+
+
+
+
 
   const getdata = async () => {
     const res = await fetch("/getMedicines", {
@@ -100,7 +128,7 @@ const Medicine = () => {
             <>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{dltdata.name}</strong>  deleted succesfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={shoot}></button>
                 </div>
             </> : ""
         }
