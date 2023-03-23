@@ -34,6 +34,8 @@ import SigninDoctor from './components/Doctor/SigninDoctor';
 import Admin from './components/Admin/Admin';
 import Edit from './components/Admin/Edit';
 import AddDoctor from './components/Admin/AddDoctor';
+import SigninAdmin from './components/Admin/SigninAdmin';
+import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin"
 
 const SidebarLayout = () => (
   <>
@@ -82,10 +84,12 @@ function App() {
 
             <Route path='/signinPharmacy' element={<SignInPharmacy />} />
             <Route path='/signinDoctor' element={<SigninDoctor />} />
+            <Route path='/signinAdmin' element={<SigninAdmin />} />
 
             <Route path='/patienthome' element={<ProtectedRoutes Component={PatientHome} />} />
             <Route path='/doctordetails' element={<ProtectedRoutes Component={DoctorDetails} />} />
 
+            {/* <Route path='/Admin' element={<ProtectedRouteAdmin Component={Admin} />} /> */}
             <Route path='/Admin' element={<Admin />} />
 
 
@@ -102,7 +106,6 @@ function App() {
             <Route path='/hospitals/:city/:hospital' element={<PatientHome  render={(params) => ({ ...params })}/>} />
             <Route path='/settings' element={<Profilesettings/>} />
             <Route path='/myprofile' element={<PatientProfile/>} />
-            {/* <Route path='/NewS' element={<NewS/>} /> */}
 
             <Route path='/DoctorLogin' element={<DoctorSignin />} />
 

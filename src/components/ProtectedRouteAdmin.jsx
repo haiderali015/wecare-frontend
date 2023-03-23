@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom';
-import Signin from './Signin';
+import {  useNavigate } from 'react-router-dom';
 
-const ProtectedRoutes = (props) => {
+const ProtectedRouteAdmin = (props) => {
     const {Component} =props;
     const navigate=useNavigate();
     useEffect(()=>{
         let login = localStorage.getItem("login");
         if(!login)
         {
-            navigate('/signin')
+            navigate('/Admin')
         }
     })
 
@@ -20,4 +19,4 @@ const ProtectedRoutes = (props) => {
   )
 }
 
-export default ProtectedRoutes
+export default ProtectedRouteAdmin

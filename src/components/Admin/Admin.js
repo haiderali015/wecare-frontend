@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Card, CardContent, CardMedia, CardActionArea, FormControl, Input, InputLabel, FormHelperText } from '@mui/material';
-import { Row, Col, Container,Button, ButtonGroup } from "react-bootstrap";
+import { Row, Col, Container,Button, ButtonGroup, Navbar } from "react-bootstrap";
 // import { useNavigate, useParams } from "react-router-dom";
 import DoctorsList from './DoctorsList';
 import PatientList from './PatientList';
 import PharmaciesList from "./PharmaciesList"
+import NavbarAdmin from './NavbarAdmin';
 
 
 const Admin = () => {
@@ -38,6 +39,8 @@ const Admin = () => {
   
 
   return (
+    <>
+    <NavbarAdmin/>
     <Container>
       <Row style={{width: "100%"}}>
         <h1 className='text-center bg-dark text-light p-2' >Admin Panel</h1>
@@ -59,6 +62,7 @@ const Admin = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }
 

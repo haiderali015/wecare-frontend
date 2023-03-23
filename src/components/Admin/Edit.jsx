@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { updatedata } from '../context/ContextProvider'
 import { useNavigate } from 'react-router-dom';
+import NavbarAdmin from './NavbarAdmin';
 
 
 const Edit = () => {
@@ -97,7 +98,7 @@ const Edit = () => {
 
     return (
         <>
-        {/* <Sidenav/> */}
+        <NavbarAdmin/>
         <div className="container">
 
             <div class="form-body">

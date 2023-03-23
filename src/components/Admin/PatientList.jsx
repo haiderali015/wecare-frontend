@@ -1,9 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
 const PatientList = () => {
   const [getPatientData,setPatientData]=useState([])
+
+  const deleteuser = async (id) => {
+    console.log("id is" + id)
+
+    const res2 = await fetch(`/deletePatient/${id}`, {
+      
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  
+    const deletedata = await res2.json();
+    console.log(deletedata);
+  
+    if (res2.status === 422 || !deletedata) {
+      console.log("error");
+    } else {
+      console.log("User deleted");
+      // setDLTdata(deletedata);
+      setPatientData(getPatientData.filter((User) => User.id !== id)); // remove deleted Uder from state
+    }
+  }
 
   const getdata = async () => {
     const res = await fetch("/getAllPatients", {
@@ -37,6 +61,8 @@ const PatientList = () => {
             <th>CNIC</th>
             <th>Phone</th>
             <th>Password</th>
+            <th></th>
+
           </tr>
         </thead>
         <tbody>
@@ -47,6 +73,9 @@ const PatientList = () => {
               <td>{element.cnic}</td>
               <td>{element.phonenumber}</td>
               <td>{element.password.substring(0, 10)+"..."}</td>
+              <td className="d-flex justify-content-between">
+                  <button className="btn btn-danger" onClick={() => deleteuser(element.id)}><DeleteOutlineIcon /></button>
+              </td>
             </tr>
           ))}
         </tbody>
