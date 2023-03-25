@@ -12,6 +12,15 @@ import doctor1 from '../../assets/doctor1.jpg';
 const PatientHome = (props) => {
   const [userdata, setUserdata] = useState([]);
   const [searchVal, setSearchVal] = useState("");
+  const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
+  
+  useEffect(() => {
+    if (!userToken) {
+      navigate('/signin');
+    }
+  }, [userToken, navigate]);
+
+
   let { city, hospital } = useParams();
   const navigate = useNavigate();
   const getdata = async () => {

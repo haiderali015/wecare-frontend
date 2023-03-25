@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Card, CardContent, CardMedia, CardActionArea, FormControl, Input, InputLabel, FormHelperText } from '@mui/material';
 import { Row, Col, Container,Button, ButtonGroup, Navbar } from "react-bootstrap";
-// import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DoctorsList from './DoctorsList';
 import PatientList from './PatientList';
 import PharmaciesList from "./PharmaciesList"
@@ -9,7 +9,14 @@ import NavbarAdmin from './NavbarAdmin';
 
 
 const Admin = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
+  useEffect(() => {
+    if (!token) {
+      navigate('/signinAdmin');
+    }
+  }, [token, navigate]);
 
   
   const [showDoctors, setShowDoctors] = useState(false);

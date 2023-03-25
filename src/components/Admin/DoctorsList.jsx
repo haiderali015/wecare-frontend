@@ -19,6 +19,7 @@ const DoctorsList = () => {
   const { updata, setUPdata } = useContext(updatedata);
 
   const { dltdata, setDLTdata } = useContext(deldata);
+  const [query,setQuery]=useState("");
 
   const deleteuser = async (id) => {
     console.log("id is" + id)
@@ -73,6 +74,8 @@ const DoctorsList = () => {
         <h1 style={{ margin: 0 }}>All Doctors</h1>
 
         <Button className="btn-add-doctor" variant="outline-primary" onClick={handleAddDoctorClick}>Add Doctor +</Button>
+        <br/>
+        <input type="text" placeholder='Search Doctor' className='search' onChange={e => setQuery(e.target.value)}/>
       </div>
     
 
@@ -104,9 +107,6 @@ const DoctorsList = () => {
                 </div>
             </> : ""
         }
-
-
-
       {getdoctordata.length > 0 ? (
         <Table striped bordered hover variant="dark">
           <thead>
@@ -126,7 +126,7 @@ const DoctorsList = () => {
             </tr>
           </thead>
           <tbody>
-            {getdoctordata.map((element) => (
+            {getdoctordata.filter((element)=>element.username.toLowerCase().includes(query)).map((element) => (
               <tr key={element.Id}>
                 <th scope="row">{element.Id}</th>
                 <td>{element.username}</td>

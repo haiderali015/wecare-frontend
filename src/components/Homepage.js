@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import "./HomePage.css";
-import { Link } from "react-router-dom";
 import Navbar from './navbar';
 import { makeStyles } from "@material-ui/core/styles";
 import { Navigate } from 'react-router-dom';
-import { useMediaQuery, Avatar } from "@material-ui/core";
-import { GridList, GridListTile } from "@material-ui/core";
 import { Grid, Button, Box, Typography, Paper } from "@material-ui/core";
 import Footer from './Footer';
 
@@ -25,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Homepage = () => {
   const classes = useStyles();
-  const [gotosignin,setgotosignin]=useState(false);
-  if(gotosignin)
+  const [gotosignuo,setgotosignup]=useState(false);
+  if(gotosignuo)
   {
     return <Navigate to="/signup" />
   }
@@ -38,10 +35,8 @@ const Homepage = () => {
           <Typography variant="h1" gutterBottom style={{color:"white"}}>
             Get Your Premium Health Care
           </Typography>
-          {/* <Typography variant="subtitle1" style={{fontSize:"25px" }} gutterBottom>
-            Book Appointments 
-          </Typography> */}
-          <Button style={{ "min-height": "56px", width: "30%", fontSize: "25px" }} variant="contained" color="primary" onClick={()=>{setgotosignin(true)}}>
+          
+          <Button style={{ "min-height": "56px", width: "30%", fontSize: "25px" }} variant="contained" color="primary" onClick={()=>{setgotosignup(true)}}>
             Sign Up Now
           </Button>
         </Grid>

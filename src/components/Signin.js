@@ -1,31 +1,44 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { showloading ,hideloading } from './Redux/Features/alertSlice';
 import Navbar from './navbar';
 import Footer from './Footer';
 import Axios from 'axios';
 
 const Signin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  
+  const setToken = (userToken) => {
+    localStorage.setItem('userToken', userToken);
+  }
+
   const login = async (event) => {
-    event.preventDefault(); // prevent default form submission behavior
+    event.preventDefault();
     try {
-      const userData = await Axios.post('http://localhost:8001/login', {
+      dispatch(showloading())
+      const userData = await Axios.post('http://localhost:8001/login',
+       {
         username: username,
         password: password,
       });
+      dispatch(hideloading())
 
-      if (userData.data.code === 200) { // check if authentication was successful
-        navigate('/WelcomePage'); // navigate to welcome page if authentication was successful
+      if (userData.data.code === 200) {
+        setToken(userData.data.token); // set the token in the local storage
+        navigate('/patienthome');
       } else {
-        setError('Wrong username or password'); // set error message if authentication was not successful
+        setError('Wrong username or password');
       }
     } catch (error) {
+      dispatch(hideloading())
       console.log(error);
-      setError('An error occurred. Please try again.'); // set error message if an error occurred
+      setError('An error occurred. Please try again.');
     }
   };
 

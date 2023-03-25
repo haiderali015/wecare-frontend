@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from '../navbar';
 import Footer from '../Footer';
+import NavbarAdmin from "./NavbarAdmin"
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -33,29 +34,35 @@ export default function SigninAdmin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+
+    const setToken = (token) => {
+      localStorage.setItem('token', token);
+    }
   
     const login = async (event) => {
-      event.preventDefault(); // prevent default form submission behavior
+      event.preventDefault();
       try {
         const userData = await Axios.post('http://localhost:8001/login', {
           username: username,
           password: password,
         });
-  
-        if (userData.data.code === 200) { // check if authentication was successful
-          navigate('/Admin'); // navigate to welcome page if authentication was successful
+    
+        if (userData.data.code === 200) {
+          setToken(userData.data.token); // set the token in the local storage
+          navigate('/Admin');
         } else {
-          setError('Wrong username or password'); // set error message if authentication was not successful
+          setError('Wrong username or password');
         }
       } catch (error) {
         console.log(error);
-        setError('An error occurred. Please try again.'); // set error message if an error occurred
+        setError('An error occurred. Please try again.');
       }
     };
   
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
+    <NavbarAdmin/>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

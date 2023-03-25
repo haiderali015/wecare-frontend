@@ -5,6 +5,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const PatientList = () => {
   const [getPatientData,setPatientData]=useState([])
+  const [query,setQuery]=useState("");
+
 
   const deleteuser = async (id) => {
     console.log("id is" + id)
@@ -51,7 +53,13 @@ const PatientList = () => {
 
   return (
     <>
-    <h1>All Users</h1>
+     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 style={{ margin: 0 }}>All Users</h1>
+
+        <br/>
+        <input type="text" placeholder='Search User' className='search' onChange={e => setQuery(e.target.value)}/>
+      </div>
+    
     {getPatientData.length > 0 ? (
       <Table striped bordered hover variant="dark">
         <thead>
@@ -66,7 +74,7 @@ const PatientList = () => {
           </tr>
         </thead>
         <tbody>
-          {getPatientData.map((element) => (
+          {getPatientData.filter((element)=>element.name.toLowerCase().includes(query)).map((element) => (
             <tr key={element.id}>
               <th scope="row">{element.id}</th>
               <td>{element.name}</td>

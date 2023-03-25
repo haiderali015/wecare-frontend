@@ -3,30 +3,33 @@ import { IoLogOutOutline } from "react-icons/io5"; // import unfilled logout ico
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from "react-router-dom";
 import "./NavbarAdmin.css";
-import {
-  FaFacebookSquare,
-  FaInstagramSquare,
-  FaYoutubeSquare,
-} from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { NavLink, useLocation } from "react-router-dom";
 
 const NavbarAdmin = () => {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
   const [showMediaIcons, setShowMediaIcons] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const shouldShowBackIcon = pathname !== "/Admin";
-  const handleLogout = () => {
-    navigate("/signinAdmin");
-  };
+  const shouldnotShowContents = pathname === "/signinAdmin";
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+    navigate('/signinAdmin');
+  }
+
+  const handleh2 =()=>{
+    navigate("/")
+  }
   return (
     <>
       <nav className="main-nav">
         {/* 1st logo part  */}
         <div className="logo">
-          <h2>
+          <h2 onClick={handleh2}>
             <span>W</span>e
             <span>C</span>are
           </h2>
@@ -38,7 +41,9 @@ const NavbarAdmin = () => {
             showMediaIcons ? "menu-link mobile-menu-link" : "menu-link"
           }
         >
-          <ul>
+
+        {!shouldnotShowContents && (
+            <ul>
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
@@ -51,22 +56,28 @@ const NavbarAdmin = () => {
             <li>
               <NavLink to="/stats">Check Stats</NavLink>
             </li>
-            {shouldShowBackIcon && (
+
+              {shouldShowBackIcon && (
               <li>
-                <NavLink to="/Admin"><ArrowBackIosNewIcon/>Back</NavLink>
+                <NavLink to="/Admin"><ArrowBackIosNewIcon />Back</NavLink>
               </li>
+              )}
+              </ul>
+
             )}
-          </ul>
+
         </div>
 
         {/* 3rd social media links */}
+        {!shouldnotShowContents && (
         <div className="social-media">
-        <ul>
+          <ul>
             <li onClick={handleLogout} className="logout-btn">
               <IoLogOutOutline />Logout
             </li>
           </ul>
         </div>
+        )}
       </nav>
     </>
   );

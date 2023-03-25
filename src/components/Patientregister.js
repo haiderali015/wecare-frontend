@@ -4,8 +4,8 @@ import Navbar from './navbar';
 import MyBackgroundImage from '../assets/signupimage.jpg';
 import Footer from './Footer';
 import { Navigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom'
-import { adddata } from './context/ContextProvider.js';
+import { useDispatch } from 'react-redux';
+import { showloading ,hideloading } from './Redux/Features/alertSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,6 +15,8 @@ const Login = () => {
     // const { udata, setUdata } = useContext(adddata);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const [inpval, setINP] = useState({
         name: "",
@@ -51,7 +53,7 @@ const Login = () => {
             alert("Password is required")
         } 
         else {
-
+            dispatch(showloading())
             const res = await fetch("/create", {
                 method: "POST",
                 headers: {
@@ -61,11 +63,14 @@ const Login = () => {
                     name, cnic, phonenumber, password
                 })
             });
+            dispatch(hideloading())
+
 
             const data = await res.json();
             console.log(data);
 
             if (res.status === 422 || !data) {
+                dispatch(hideloading())
                 console.log("error ");
                 alert("error");
 

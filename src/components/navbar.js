@@ -15,29 +15,31 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Navigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 
 
-const pages = [{page:'Home',url:"/"}, {page:'About us',url:"/about"}, {page:'Our plans',url:"/ourplans"},{ page:'contact us',url:"/contactus"}];
+const pages = [{ page: 'Home', url: "/" }, { page: 'About us', url: "/about" }, { page: 'Our plans', url: "/ourplans" }, { page: 'contact us', url: "/contactus" }];
 const settings = ['Dashboard', 'Logout'];
 const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3
-  },
-  table: {
-    minWidth: 1020
-  },
-  tableWrapper: {
-    overflowX: "auto"
-  },
-  hover: {
-    "&:hover": {
-      backgroundColor: 'rgb(7, 177, 77, 0.42)'
+    root: {
+        width: "100%",
+        marginTop: theme.spacing.unit * 3
+    },
+    table: {
+        minWidth: 1020
+    },
+    tableWrapper: {
+        overflowX: "auto"
+    },
+    hover: {
+        "&:hover": {
+            backgroundColor: 'rgb(7, 177, 77, 0.42)'
+        }
     }
-  }
 });
 function navbar() {
+    const { pathname } = useLocation();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [gotosignin, setgotosignin] = useState(false);
@@ -60,6 +62,7 @@ function navbar() {
     if (gotosignin) {
         return <Navigate to="/signin" />
     }
+    const shouldnotShowSignin = pathname === "/signinAdmin";
 
     return (
         <AppBar position="static">
@@ -115,7 +118,7 @@ function navbar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} href={page.url} onClick={handleCloseNavMenu} >
-                                    <Typography textAlign="center" style={{textDecoration:"none", color:"white"}}>{page.page}</Typography>
+                                    <Typography textAlign="center" style={{ textDecoration: "none", color: "white" }}>{page.page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -141,23 +144,25 @@ function navbar() {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <a style={{textDecoration:"none", color: 'white',marginLeft:"10px",fontSize:"12px"}}
+                            <a style={{ textDecoration: "none", color: 'white', marginLeft: "10px", fontSize: "12px" }}
                                 // key={page.page}
                                 class="nav_links"
                                 href={page.url}
-                                // color="inherit"
-                                // onClick={handleCloseNavMenu}
-                                // sx={{ m: 2, color: 'white' ,textDecoration:"none", fontSize:"13px"}}
                             >
                                 {page.page}
                             </a>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Register Yourself">
-                        <Button style={{color:"white"}} variant="none" color="primary" onClick={() => { setgotosignin(true) }}>Sign In</Button>
-                        {/* <Link href="/signin"  style={{textDecoration:"none" }}><Button  variant="contained" color="primary" style={{fontSize:"10px" }}>Login</Button></Link> */}
-                        </Tooltip>
+                        {!shouldnotShowSignin && (
+                            <li>
+                                <Tooltip title="Sign in Yourself">
+                                    <Button style={{ color: "white" }} variant="none" color="primary" onClick={() => { setgotosignin(true) }}>Sign In</Button>
+                                </Tooltip>              
+                            </li>
+                        )}
+
+
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"

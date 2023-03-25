@@ -28,14 +28,15 @@ import Booking from './components/Patient/BookDoctor';
 import Profilesettings from './components/Patient/Profilesettings';
 import PatientProfile from './components/Patient/PatientProfile';
 import DoctorSignin from './components/Doctor/DoctorSignin';
-import ProtectedRoutes from './components/ProtectedRoutes';
 import SignInPharmacy from './components/Pharmacy/SigninPharmacy';
 import SigninDoctor from './components/Doctor/SigninDoctor';
 import Admin from './components/Admin/Admin';
 import Edit from './components/Admin/Edit';
 import AddDoctor from './components/Admin/AddDoctor';
 import SigninAdmin from './components/Admin/SigninAdmin';
-import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin"
+import { useSelector } from 'react-redux';
+import  Spinner  from './components/Spinner';
+
 
 const SidebarLayout = () => (
   <>
@@ -47,6 +48,7 @@ const SidebarLayout = () => (
 
 
 function App() {
+  const {loading} = useSelector(state => state.alerts)
   const theme = {
     colors: {
       heading: "rgb(24 24 29)",
@@ -73,7 +75,10 @@ function App() {
         <ThemeProvider theme={theme}>
       <GlobalStyle />
       <BrowserRouter>
-          <Routes>
+      {loading ? (
+        <Spinner/>
+      ):(
+      <Routes>
             <Route path='/' element={<Homepage />} />
             <Route path='/about' element={<About />} />
             <Route path='/signup' element={<Patientregister />} />
@@ -86,10 +91,9 @@ function App() {
             <Route path='/signinDoctor' element={<SigninDoctor />} />
             <Route path='/signinAdmin' element={<SigninAdmin />} />
 
-            <Route path='/patienthome' element={<ProtectedRoutes Component={PatientHome} />} />
-            <Route path='/doctordetails' element={<ProtectedRoutes Component={DoctorDetails} />} />
+            <Route path='/patienthome' element={<PatientHome/>} />
+            <Route path='/doctordetails' element={<DoctorDetails />} />
 
-            {/* <Route path='/Admin' element={<ProtectedRouteAdmin Component={Admin} />} /> */}
             <Route path='/Admin' element={<Admin />} />
 
 
@@ -110,8 +114,10 @@ function App() {
             <Route path='/DoctorLogin' element={<DoctorSignin />} />
 
             <Route path="/bill" element={<CalculateBill />} /> 
-          </Routes>
+        </Routes>
 
+       )}
+          
         </BrowserRouter>
     </ThemeProvider>
 
