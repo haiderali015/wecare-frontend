@@ -14,11 +14,11 @@ const PatientHome = (props) => {
   const [searchVal, setSearchVal] = useState("");
   const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
   
-  useEffect(() => {
-    if (!userToken) {
-      navigate('/signin');
-    }
-  }, [userToken, navigate]);
+  // useEffect(() => {
+  //   if (!userToken) {
+  //     navigate('/signin');
+  //   }
+  // }, [userToken, navigate]);
 
 
   let { city, hospital } = useParams();
@@ -54,8 +54,8 @@ const PatientHome = (props) => {
 
 
   return (
-    <><Navbar3 />
-      <Grid xs={12} m={5} >
+    <>
+      <Grid xs={12} m={5} style={{marginTop:"50px"}}>
         <TextField
           id="outlined-basic"
           variant="outlined"
@@ -72,8 +72,8 @@ const PatientHome = (props) => {
         </Grid>
       }
       <Grid container >
-        <Grid item xs={5} px={5}>
-          <Box sx={{ width: "100%", background: "#f4f6f9" }} m={5} p={2}>
+        <Grid item xs={3} px={3}>
+          <Box sx={{ width: "80%", background: "#f4f6f9" }} m={5} p={2}>
             <FormControl fullWidth sx={{ marginBottom: "50px" }}>
               <FormLabel sx={{ fontSize: "18px" }} id="demo-radio-buttons-group-label">Specialities</FormLabel>
               <NativeSelect
@@ -133,7 +133,7 @@ const PatientHome = (props) => {
 
           </Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={9}>
         {userdata.map((each, index) => {
           return each.name && each.Type && each.name.toLowerCase().includes(searchVal.toLowerCase()) || each.Type.toLowerCase().includes(searchVal.toLowerCase()) ?
             <Grid item m={5} key={index}>

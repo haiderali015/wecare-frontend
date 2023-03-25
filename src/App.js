@@ -36,6 +36,7 @@ import AddDoctor from './components/Admin/AddDoctor';
 import SigninAdmin from './components/Admin/SigninAdmin';
 import { useSelector } from 'react-redux';
 import  Spinner  from './components/Spinner';
+import Patientsidenav from './components/Patient/PatientSidenav';
 
 
 const SidebarLayout = () => (
@@ -92,6 +93,8 @@ function App() {
             <Route path='/signinAdmin' element={<SigninAdmin />} />
 
             <Route path='/patienthome' element={<PatientHome/>} />
+            <Route path='/patienthomepage' element={<Patientsidenav/>} />
+
             <Route path='/doctordetails' element={<DoctorDetails />} />
 
             <Route path='/Admin' element={<Admin />} />
@@ -101,6 +104,7 @@ function App() {
 
             <Route path='/makeappointment' element={<MakeAppointment />} />
             <Route path='/Doctor' element={<Doctor />} />
+
             <Route path='/Pharmacy' element={<Sidenav />} />
             <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
 

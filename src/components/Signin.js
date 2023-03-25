@@ -31,7 +31,7 @@ const Signin = () => {
 
       if (userData.data.code === 200) {
         setToken(userData.data.token); // set the token in the local storage
-        navigate('/patienthome');
+        navigate('/patienthomepage');
       } else {
         setError('Wrong username or password');
       }
