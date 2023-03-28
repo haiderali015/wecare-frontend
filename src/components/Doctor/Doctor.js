@@ -1,5 +1,6 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useNavigate, useSearchParams, useParams } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -16,7 +17,8 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import Navbar2 from '../Navbar2';
-import { Drawer ,List,ListItem,ListItemButton,ListItemText} from '@mui/material';
+import { Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import NavbarDoctor from './NavbarDoctor';
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -36,63 +38,75 @@ const steps = ['Patient Information', 'Prescription details', 'Review your presc
 
 const theme = createTheme();
 
-export default function Doctor() {
-  const [patient,setPatient]=React.useState("");
-  const {id}=1;
-  const [app,setApp]=React.useState([]);
-  const [data,setData]=React.useState({id:1,Diagnosis:"",Allergies:"",Medicines:[{Name:"",Quantity:"",Duration:""}],Notes:""});
-  const saveapp= async ()=>
-  {
-      const res = await fetch(`http://localhost:8001/appointments/1`, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            data
-        })
-      });
-      const data = await res.json();
-      if (res.status === 422 || !data) {
-          console.log("error ");
-      } else {
-      }
+export default function Doctor(props) {
+  const [patient, setPatient] = React.useState({id:"",name:"",Address:"",phonenumber:"",amount:"",cnic:""});
+  let { id } = useParams();
+  const [app, setApp] = React.useState([]);
+  const [precribtion, setPrecribtion] = React.useState({ id: 1, Diagnosis: "", Allergies: "", Medicines: [{ Name: "", Quantity: "", Duration: "",Consumption:"" }], Notes: "" });
+  const getAppoints = async () => {
+    const res = await fetch(`http://localhost:8001/appointments/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+    const precribtion = await res.json();
+    if (res.status === 422 || !precribtion) {
+      console.log("error ");
+    } else {
+      setApp(precribtion);
+    }
   }
-  const getAppoints= async ()=>
-  {
-      const res = await fetch(`http://localhost:8001/appointments/1`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json"
-          },
-      });
-      const data = await res.json();
-      if (res.status === 422 || !data) {
-          console.log("error ");
-      } else {
-          setApp(data);
-      }
+  const getPatient = async (id) => {
+    const res = await fetch(`http://localhost:8001/getpatient/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+    const patient = await res.json();
+    if (res.status === 422 || !precribtion) {
+      console.log("error ");
+    } else {
+      setPatient(patient[0]);
+    }
   }
-React.useEffect(()=>{
-  getAppoints();
-},[]);
+
+  React.useEffect(() => {
+    getAppoints();
+  }, []);
   const [activeStep, setActiveStep] = React.useState(0);
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm props={patient}/>;
+        return <AddressForm props={patient} />;
       case 1:
-        return <PaymentForm props={[data,setData]}/>;
+        return <PaymentForm props={[precribtion, setPrecribtion]} />;
       case 2:
-        return <Review />;
+        return <Review props={[precribtion,patient]}/>;
       default:
         throw new Error('Unknown step');
     }
   }
-
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+  };
+  const handleSubmit=async()=>
+  {
+    const data={appointment_id:id,Diagnosis:precribtion.Diagnosis,Allergies:precribtion.Allergies,Medicines:precribtion.Medicines,Notes:precribtion.Notes,DoctorId:id,UserId:patient.id};
+    const res = await fetch(`http://localhost:8001/doctor_records/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    // if (res.status === 422 || !precribtion) {
+      // console.log("error ");
+    // } else {
+    // }
   };
 
   const handleBack = () => {
@@ -102,26 +116,25 @@ React.useEffect(()=>{
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar2 />
+      <NavbarDoctor />
       <Drawer
-        open={patient==""?true:false}
+        open={patient.name == "" ? true : false}
       // onClose={toggleDrawer(anchor, false)}
       >
         <Box
-          sx={{ width:250 }}
+          sx={{ width: 250 }}
           role="presentation"
-          // onClick={toggleDrawer(anchor, false)}
-          // onKeyDown={toggleDrawer(anchor, false)}
+        // onClick={toggleDrawer(anchor, false)}
+        // onKeyDown={toggleDrawer(anchor, false)}
         >
-          <List style={{fontSize:"24px"}} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          <List style={{ fontSize: "24px" }} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {app.map((text, index) => (
-             new Date(text.Time).getDate() ==new Date().getDate() ?
-             <ListItem key={text.patient} disablePadding>
-             <ListItemButton onClick={()=>{setPatient(text.patient)}}>
-               <ListItemText primary={text.patient.toUpperCase()} />
-               <span>{new Date(text.Time).getHours()}:00</span>
-             </ListItemButton>
-           </ListItem>:<></>
+              <ListItem key={text.patient} disablePadding>
+                <ListItemButton onClick={() => { getPatient(text.id) }}>
+                  <ListItemText primary={text.patient.toUpperCase()} />
+                  <span>{new Date(text.Time).getHours()}:00</span>
+                </ListItemButton>
+              </ListItem>
             ))}
           </List>
         </Box>
@@ -160,7 +173,7 @@ React.useEffect(()=>{
 
                 <Button
                   variant="contained"
-                  onClick={handleNext}
+                  onClick={activeStep === steps.length - 1? handleSubmit:handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Finalize' : 'Next'}

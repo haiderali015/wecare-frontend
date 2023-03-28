@@ -13,6 +13,9 @@ const PatientHome = (props) => {
   const [userdata, setUserdata] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
+  const [query,setQuery]=useState("");
+
+
   
   // useEffect(() => {
   //   if (!userToken) {
@@ -55,16 +58,10 @@ const PatientHome = (props) => {
 
   return (
     <>
+    
       <Grid xs={12} m={5} style={{marginTop:"50px"}}>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          fullWidth
-          label="Search doctor by degree,name"
-          onChange={(event) => {
-            setSearchVal(event.target.value);
-          }}
-        />
+      <input type="text" placeholder='Search Doctor' className='search' onChange={e => setQuery(e.target.value)}/>
+
       </Grid>
       {city &&
         <Grid xs={12} m={5} >
@@ -134,7 +131,7 @@ const PatientHome = (props) => {
           </Box>
         </Grid>
         <Grid item xs={9}>
-        {userdata.map((each, index) => {
+        {userdata.filter((element)=>element.username.toLowerCase().includes(query)).map((each, index) => {
           return each.name && each.Type && each.name.toLowerCase().includes(searchVal.toLowerCase()) || each.Type.toLowerCase().includes(searchVal.toLowerCase()) ?
             <Grid item m={5} key={index}>
                 <Card
@@ -156,7 +153,7 @@ const PatientHome = (props) => {
                   >
                     <CardContent sx={{ flex: "1 0 auto" }}>
                       <Typography variant="h3" sx={{ fontWeight: 600 }}>
-                        {each.Name}
+                        {each.username}
                       </Typography>
                       <Typography
                         variant="h5"

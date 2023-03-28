@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { updatedata } from '../context/ContextProvider'
 import { useNavigate } from 'react-router-dom';import Footer from '../Footer';
 import Navbar2 from '../Navbar2';
+import jwtDecode from 'jwt-decode';
 import "./profilesetting.css";
 
 const Profilesettings = () => {
@@ -11,6 +12,11 @@ const Profilesettings = () => {
 
 
     const {updata, setUPdata} = useContext(updatedata)
+    const token = localStorage.getItem('userToken');
+
+    const decodedToken = jwtDecode(token);
+    const PatientID = decodedToken.userId; 
+  
 
     const navigate = useNavigate();
  
@@ -42,13 +48,13 @@ const Profilesettings = () => {
  
  
      const { id } = useParams("");
-     console.log(id);
+     console.log("patient id is "+PatientID);
  
  
  
      const getdata = async () => {
  
-         const res = await fetch(`/indusers/${1}`, {
+         const res = await fetch(`/indusers/${PatientID}`, {
              method: "GET",
              headers: {
                  "Content-Type": "application/json"

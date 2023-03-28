@@ -5,14 +5,19 @@ import { useParams } from 'react-router-dom';
 import DCard from './Cards';
 import Navbar2 from '../Navbar3'
 import "./PatientHome.css";
+import jwtDecode from 'jwt-decode';
 
 const MakeAppointment = () => {
-    const userId="1";
+    const token = localStorage.getItem('userToken');
+
+    const decodedToken = jwtDecode(token);
+    const userId=decodedToken.userId;
+    
     const [userdata, setUserdata] = useState([]);
-    const [doc, setDoc] = useState([]);
+    const [doc, setDoc] = useState({Name:"",Experience:"",Type:""});
     const [bookdate, setBookdate] = useState(new Date());
     const [days, setDays] = useState([]);
-    const [times, setTimes] = useState([8, 9, 10, 11]);
+    const [times, setTimes] = useState([8, 9, 10, 11,12]);
     let { id } = useParams();
     const getslots = async () => {
         const res = await fetch(`http://localhost:8001/slots`, {
@@ -31,13 +36,11 @@ const MakeAppointment = () => {
             console.log("error ");
 
         } else {
-            console.log(data[1]);
             setUserdata(data[1]);
-            setDoc(data[0]);
+            setDoc(data[0][0]);
         }
     }
     const savedata = async () => {
-        console.log(bookdate);
         const res = await fetch(`http://localhost:8001/bookdoc`, {
             method: "POST",
             headers: {
@@ -51,14 +54,14 @@ const MakeAppointment = () => {
         alert("Booking added");
     }
     const available = (date) => {
-        console.log(date);
         for (let i = 0; i < userdata.length; i++) {
-            console.log(Date(userdata[i].Time));
+            console.log(new Date(userdata[i].Time).getDate());
             
-            if (Date(userdata[i].Time).substring(8, 10) == date.getDate()) {
-                const all = [8, 9, 10, 11];
+            if (new Date(userdata[i].Time).getDate() == date.getDate()) {
+                const all = [8, 9, 10, 11,12];
                 let temp=new Array;
-                for (var j = 0; j < 4; j++) {
+                for (var j = 0; j <= 4; j++) {
+                    console.log(new Date(userdata[i].Time).getHours() , all[j]);
                     if (new Date(userdata[i].Time).getHours() == all[j]) {
                     }
                     else
@@ -67,6 +70,7 @@ const MakeAppointment = () => {
                     }
 
                 }
+                console.log(temp);
                 setTimes(temp);
             }
             else
@@ -78,8 +82,7 @@ const MakeAppointment = () => {
     useEffect(() => {
         getslots();
         dates();
-        //   getdata();
-    }, [])
+    }, []);
 
     const dates = () => {
         var days = [];
@@ -111,10 +114,10 @@ const MakeAppointment = () => {
                         <Avatar src={require("../../assets/doctor1.jpg")} sx={{ height: '70px', width: '70px' }} />
                     </Grid>
                     <Grid item xs={8} mt={1}>
+                        <Typography variant="h4" color={"inherit"}>{doc.username}</Typography>
                         <Typography variant="h8" color={"text.secondary"}>Available</Typography>
-                        <Typography variant="h4" color={"inherit"}>{doc.Name}</Typography>
-                        <Typography variant="h6" color={"text.secondary"}>{doc.Type}</Typography>
-                        <Typography variant="h6" color={"text.secondary"}>{doc.Experience} years of experience</Typography>
+                        <Typography variant="h6" color={"text.secondary"}>{doc.Degree}</Typography>
+                        <Typography variant="h6" color={"text.secondary"}>{doc.Experience} of experience</Typography>
                     </Grid>
                 </Grid>
                 <Grid container m={1}>
@@ -156,8 +159,8 @@ const MakeAppointment = () => {
                                         >
                                             <Card >
                                                 <CardContent>
-                                                    <Typography variant="body1" color={"inherit"}>{each.toISOString().substr(0, 10)}</Typography>
-                                                    <Typography variant="body2" color={"inherit"}>{"5"}</Typography>
+                                                    <Typography variant="body1" color={"inherit"}>{each.toDateString()}</Typography>
+                                                    {/* <Typography variant="body2" color={"inherit"}>{"Select Time below"}</Typography> */}
                                                 </CardContent>
                                             </Card>
                                         </Button>

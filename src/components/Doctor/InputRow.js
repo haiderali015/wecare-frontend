@@ -17,7 +17,8 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
-                    onChange={handleChange}
+                    name={"Name"}
+                    onChange={(e)=>handleChange(e,index)}
                     id="cardName"
                     label="Medicine Name"
                     fullWidth
@@ -28,7 +29,9 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
-                    onChange={handleChange}
+                    onChange={(e)=>handleChange(e,index)}
+
+                    name={"Quantity"}
                     id="cardNumber"
                     label="Quantity"
                     fullWidth
@@ -39,8 +42,10 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
-                    onChange={handleChange}
+                    onChange={(e)=>handleChange(e,index)}
+
                     id="expDate"
+                    name={"Duration"}
                     label="Duration"
                     fullWidth
                     autoComplete="cc-exp"
@@ -50,9 +55,10 @@ export const InputRow = ({
             <Grid item xs={12} md={6}>
                 <TextField
                     required
-                    onChange={handleChange}
+                    onChange={(e)=>handleChange(e,index)}
                     id="cvv"
                     label="consumption Ex: 3 Times a day/8 hourly"
+                    name={"Consumption"}
                     fullWidth
                     autoComplete="cc-csc"
                     variant="standard"
@@ -60,7 +66,7 @@ export const InputRow = ({
             </Grid>
             <Grid item xs={12} >
                 <div>
-                    <IconButton onClick={handleRemove}>
+                    <IconButton onClick={()=>handleRemove(index)}>
                         <RemoveIcon />
                     </IconButton>
                     <IconButton onClick={handleAdd}>

@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from '../navbar';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
+import NavbarDoctor from './NavbarDoctor';
 
 
 function Copyright(props) {
@@ -84,7 +85,7 @@ else{
 
   return (
     <>
-    <Navbar/>
+    <NavbarDoctor/>
 
     
     <ThemeProvider theme={theme}>

@@ -18,10 +18,9 @@ export default function AddressForm(props) {
             id="firstName"
             name="firstName"
             label="Name"
-            value={props.props}
+            value={props.props.name}
             fullWidth
             autoComplete="given-name"
-
             variant="standard"
           />
         </Grid>
@@ -31,6 +30,7 @@ export default function AddressForm(props) {
             id="address1"
             name="address1"
             label="Address"
+            value={props.props.address}
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
@@ -41,6 +41,7 @@ export default function AddressForm(props) {
             id="address2"
             name="address2"
             label="Phone Number"
+            value={props.props.phoneno}
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
@@ -52,6 +53,7 @@ export default function AddressForm(props) {
             id="city"
             name="city"
             label="Amount"
+            value={props.props.amount}
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
@@ -60,9 +62,10 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="state"
-            name="state"
-            label="Payment Reciept Id"
+            id="cnic"
+            name="cnic"
+            value={props.props.cnic}
+            label="CNIC"
             fullWidth
             variant="standard"
           />

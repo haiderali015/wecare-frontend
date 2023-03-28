@@ -26,6 +26,7 @@ import CalculateBill  from '../Pharmacy/CalculateBill';
 import AddMedicine  from '../Pharmacy/AddMedicine';
 import { useNavigate, useParams } from "react-router-dom";
 import {useEffect } from 'react'
+import jwtDecode from 'jwt-decode';
 
 
 import Medicine  from '../Pharmacy/Medicine';
@@ -105,6 +106,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidenav() {
     const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
+   
+  const token = localStorage.getItem('userToken');
+
+  const decodedToken = jwtDecode(token);
+  const PatientName = decodedToken.username; 
     
     const navigate = useNavigate();
     useEffect(() => {
@@ -150,7 +156,7 @@ export default function Sidenav() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Patient Portal
+            Hi {PatientName} ,
           </Typography>
         </Toolbar>
       </AppBar>

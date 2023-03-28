@@ -149,46 +149,24 @@ const deleteuser = async (id) => {
                     <th scope="col" style={{ fontSize: "17px" }}>Hospital</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Hospital Address</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Date</th>
-                    <th scope="col" style={{ fontSize: "17px" }}>Prescription</th>
+                    {/* <th scope="col" style={{ fontSize: "17px" }}>Prescription</th> */}
                     <th></th>
 
 
                   </tr>
                 </thead>
                 <tbody >
-                  {
-                    getuserdata.map((element, id) => {
-                      return (
-                        <>
-                          {/* <tr>
-                            <th scope="row">{id + 1}</th>
-                            <td>{element.name}</td>
-                            <td>{element.mg}</td>
-                            <td>{element.type}</td>
-                            <td>{element.quantity}</td>
-                            <td className="d-flex justify-content-between">
-                            <NavLink to={`view/${element.id}`}> <button className="btn btn-success"><RemoveRedEyeIcon /></button></NavLink>
-                              <NavLink to={`editMedicine/${element.id}`}>  <button className="btn btn-primary"><CreateIcon /></button></NavLink>
-                              <button className="btn btn-danger" onClick={() => deleteuser(element.id)}><DeleteOutlineIcon /></button>
-                            </td>
-                          </tr> */}
+                <tr >
+                    <td>Doctor Ahmad</td>
+                    <td>Gurki</td>
+                    <td>Jallo Park</td>
+                    <td>29 March 2023</td>
+                    {/* <th scope="col" style={{ fontSize: "17px" }}>Prescription</th> */}
+                    <th></th>
 
 
-
-
-                          <tr>
-                            <th>Dr Tahir</th>
-                            <td>Shayk Zayed</td>
-                            <td>Allama Iqbal Town</td>
-                            <td>3rd March</td>
-                            <td>Prescription</td>
-                            <td><button className="btn btn-success"><RemoveRedEyeIcon /></button></td>
-                            
-                          </tr>
-                        </>
-                      )
-                    })
-                  }
+                  </tr>
+                  
                   </tbody>
                     </table>
 
@@ -199,3 +177,38 @@ const deleteuser = async (id) => {
     )
 }
 export default Appointments
+
+
+// {
+//   getuserdata.map((element, id) => {
+//     return (
+//       <>
+//         {/* <tr>
+//           <th scope="row">{id + 1}</th>
+//           <td>{element.name}</td>
+//           <td>{element.mg}</td>
+//           <td>{element.type}</td>
+//           <td>{element.quantity}</td>
+//           <td className="d-flex justify-content-between">
+//           <NavLink to={`view/${element.id}`}> <button className="btn btn-success"><RemoveRedEyeIcon /></button></NavLink>
+//             <NavLink to={`editMedicine/${element.id}`}>  <button className="btn btn-primary"><CreateIcon /></button></NavLink>
+//             <button className="btn btn-danger" onClick={() => deleteuser(element.id)}><DeleteOutlineIcon /></button>
+//           </td>
+//         </tr> */}
+
+
+
+
+//         <tr>
+//           <th>Dr Tahir</th>
+//           <td>Shayk Zayed</td>
+//           <td>Allama Iqbal Town</td>
+//           <td>3rd March</td>
+//           <td>Prescription</td>
+//           <td><button className="btn btn-success"><RemoveRedEyeIcon /></button></td>
+          
+//         </tr>
+//       </>
+//     )
+//   })
+// }

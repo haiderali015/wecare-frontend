@@ -103,8 +103,7 @@ function App() {
 
 
             <Route path='/makeappointment' element={<MakeAppointment />} />
-            <Route path='/Doctor' element={<Doctor />} />
-
+            <Route path='/Doctor/:id' element={<Doctor render={(params) => ({ ...params })}/>} />
             <Route path='/Pharmacy' element={<Sidenav />} />
             <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
 
