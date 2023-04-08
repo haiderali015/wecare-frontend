@@ -28,6 +28,7 @@ import AddMedicine  from '../Pharmacy/AddMedicine';
 import Medicine  from '../Pharmacy/Medicine';
 import logo from "./wecarelogo.png";
 import { Button} from '@material-ui/core';
+import { useNavigate } from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -101,11 +102,17 @@ export default function Sidenav() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const[menudata,setmenudata]=useState("Invoice");
-
+  const [pharmacyToken, setpharmacyToken] = useState(localStorage.getItem('pharmacytoken'));
+   
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+const navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem("pharmacytoken");
+    setpharmacyToken(null);
+    navigate("/signinPharmacy")
+}
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -227,6 +234,28 @@ export default function Sidenav() {
                  <MedicationIcon/>
                 </ListItemIcon>
                 <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Add Medicine"}/>
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    fontSize:"35px"
+                  }}
+                >
+                 <MedicationIcon/>
+                </ListItemIcon>
+                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Logout"}/>
               </ListItemButton>
             </ListItem>
 

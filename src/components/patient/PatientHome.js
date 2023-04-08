@@ -1,74 +1,65 @@
-import React, { useState, useEffect, useContext } from 'react'
-import "./PatientHome.css";
-import { useNavigate, useSearchParams, useParams } from "react-router-dom";
-import HomeIcon from '@mui/icons-material/Home';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { NavLink } from 'react-router-dom';
-import Navbar3 from '../Navbar3';
-import Footer from '../Footer';
-import { Box } from '@mui/system';
-import { Radio, RadioGroup, FormLabel, NativeSelect, FormControlLabel, Grid, TextField, Typography, Card, CardContent, Avatar, CardMedia, CardActionArea, Button, FormControl, Input, InputLabel, FormHelperText } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, Card, Button ,CardActionArea, CardContent, CardMedia, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, Input, InputLabel, NativeSelect, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import doctor1 from '../../assets/doctor1.jpg';
+
 const PatientHome = (props) => {
   const [userdata, setUserdata] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
   const [query,setQuery]=useState("");
-
-
-  
-  // useEffect(() => {
-  //   if (!userToken) {
-  //     navigate('/signin');
-  //   }
-  // }, [userToken, navigate]);
-
+  const [speciality, setSpeciality] = useState("");
+  const [selectedhospital, sethospital] = useState("");
 
   let { city, hospital } = useParams();
   const navigate = useNavigate();
+  
   const getdata = async () => {
-    const res = await fetch(`http://localhost:8001/getDoctors?city=${city}&hospital=${hospital}`, {
+    let url = `http://localhost:8001/getDoctors?city=${city}&hospital=${hospital}`;
+    if (speciality) {
+      url += `&speciality=${speciality}`;
+      console.log(url); 
+    }
+    if (selectedhospital) {
+      url += `&hospital=${selectedhospital}`;
+      console.log(url); 
+
+    }
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       },
-
     });
 
     const data = await res.json();
-    if (res.status === 422 || !data) {
+    if (res.status === 422 || !data || data.length === 0) {
       console.log("error ");
-
+      setUserdata([]);
     } else {
       setUserdata(data)
     }
+  };
 
-  }
   const routes = (id) => {
     navigate(`/booking/${id}`);
-  }
+  };
+
   useEffect(() => {
     getdata();
-  }, [])
-
-
-
-
-
+  }, [speciality, selectedhospital]);
 
   return (
     <>
-    
       <Grid xs={12} m={5} style={{marginTop:"50px"}}>
-      <input type="text" placeholder='Search Doctor' className='search' onChange={e => setQuery(e.target.value)}/>
-
+        <TextField type="text" placeholder='Search Doctor' className='search' onChange={e => setQuery(e.target.value)} />
       </Grid>
       {city &&
         <Grid xs={12} m={5} >
           <Typography variant="h4" color={"inherit"}>Doctors in {hospital ? `${hospital}` : `${city}`}</Typography>
         </Grid>
       }
-      <Grid container >
+      <Grid container>
         <Grid item xs={3} px={3}>
           <Box sx={{ width: "80%", background: "#f4f6f9" }} m={5} p={2}>
             <FormControl fullWidth sx={{ marginBottom: "50px" }}>
@@ -76,13 +67,16 @@ const PatientHome = (props) => {
               <NativeSelect
                 defaultValue={"All Specialities"}
                 inputProps={{
-                  name: 'age',
+                  name: 'speciality',
                   id: 'uncontrolled-native',
                 }}
+                onChange={(e) => setSpeciality(e.target.value)}
+                
               >
-                <option value="">All Specialities</option><option value="dentist">Dentist</option>
+                <option value="">All Specialities</option>
+                <option value="dentist">Dentist</option>
                 <option value="dermatologist">Dermatologist</option>
-                <option value="hair-transplant-surgeon">Hair Transplant Surgeon</option>
+                <option value="Hair Transplant Surgeon">Hair Transplant Surgeon</option>
                 <option value="physiotherapist">Physiotherapist</option>
                 <option value="sports-medicine-specialist">Sports Medicine Specialist</option>
                 <option value="plastic-surgeon">Plastic Surgeon</option>
@@ -115,24 +109,32 @@ const PatientHome = (props) => {
                 <FormControlLabel value="other" control={<Radio />} label="Other" />
               </RadioGroup>
             </FormControl>
-            <FormControl fullWidth sx={{ marginBottom: "20px" }}>
-              <FormLabel sx={{ fontSize: "18px" }} id="radio-buttons-group-label">Availability</FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="radio-buttons-group-label"
-                defaultValue="Today"
-                name="radio-buttons-group"
+
+            <FormControl fullWidth sx={{ marginBottom: "50px" }}>
+              <FormLabel sx={{ fontSize: "18px" }} id="demo-radio-buttons-group-label">Hospitals</FormLabel>
+              <NativeSelect
+                defaultValue={"All Hospitals"}
+                inputProps={{
+                  name: 'selectedhospital',
+                  id: 'uncontrolled-native',
+                }}
+                onChange={(e) => sethospital(e.target.value)}
+                
               >
-                <FormControlLabel value="Today" control={<Radio />} label="Today" />
-                <FormControlLabel value="Tommorrow" control={<Radio />} label="Tommorrow" />
-              </RadioGroup>
+                <option value="">All Hospitals</option>
+                <option value="Gurki">Gurki</option>
+                <option value="CMH">CMH</option>
+                <option value="Fatima Memorial">Fatima Memorial</option>
+                <option value="Shayk Zayed">Shayk Zayed</option>
+                
+              </NativeSelect>
             </FormControl>
 
           </Box>
         </Grid>
         <Grid item xs={9}>
         {userdata.filter((element)=>element.username.toLowerCase().includes(query)).map((each, index) => {
-          return each.name && each.Type && each.name.toLowerCase().includes(searchVal.toLowerCase()) || each.Type.toLowerCase().includes(searchVal.toLowerCase()) ?
+          return each.name && each.Type.toLowerCase().includes(speciality.toLowerCase()) || each.Type.toLowerCase().includes(speciality.toLowerCase())  ?
             <Grid item m={5} key={index}>
                 <Card
                   sx={{
@@ -174,7 +176,7 @@ const PatientHome = (props) => {
                         color="text.secondary"
                         component="div"
                       >
-                        {each.Degree}
+                        {each.hospital} Hospital
                       </Typography>
                     </CardContent>
                     <CardActionArea>
@@ -194,4 +196,4 @@ const PatientHome = (props) => {
     </>)
 }
 
-export default PatientHome;
+export default PatientHome;

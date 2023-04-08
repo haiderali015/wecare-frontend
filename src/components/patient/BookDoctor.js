@@ -1,8 +1,9 @@
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { Avatar, Grid, Typography, Chip, Divider, Box, Button, Card, CardContent } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { useParams } from 'react-router-dom';
-import DCard from './Cards';
+import { updatedata } from '../context/ContextProvider'
+import { useNavigate } from 'react-router-dom';
 import Navbar2 from '../Navbar3'
 import "./PatientHome.css";
 import jwtDecode from 'jwt-decode';
@@ -19,6 +20,76 @@ const MakeAppointment = () => {
     const [days, setDays] = useState([]);
     const [times, setTimes] = useState([8, 9, 10, 11,12]);
     let { id } = useParams();
+    const {username} = useParams();
+
+    const {updata, setUPdata} = useContext(updatedata)
+
+   const navigate = useNavigate();
+
+    const [inpval, setINP] = useState({
+        username: "",
+        degree: "",
+        Type: "",
+        HospitalID: "",
+        password:"",
+        cnic: "",
+        city: "",
+        hospital:"",
+        Fee:"",
+        })
+
+    const setdata = (e) => {
+        console.log(e.target.value);
+        const { name, value } = e.target;
+        setINP((preval) => {
+            return {
+                ...preval,
+                [name]: value
+            }
+        })
+    }
+
+    const getDoctotdata = async () => {
+
+        const res = await fetch(`/indDoctor/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status === 422 || !data) {
+            console.log("error ");
+
+        } else {
+            setINP(data[0])
+            console.log("get data");
+
+        }
+    }
+
+    useEffect(() => {
+        getDoctotdata();
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const getslots = async () => {
         const res = await fetch(`http://localhost:8001/slots`, {
             method: "POST",
@@ -31,6 +102,8 @@ const MakeAppointment = () => {
 
         });
 
+        
+
         const data = await res.json();
         if (res.status === 422 || !data) {
             console.log("error ");
@@ -40,19 +113,25 @@ const MakeAppointment = () => {
             setDoc(data[0][0]);
         }
     }
+
+    
+    const doctorFee = inpval.Fee;
+    const doctor_hospital= inpval.hospital;
     const savedata = async () => {
+
         const res = await fetch(`http://localhost:8001/bookdoc`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id,bookdate,userId
+                id,bookdate,userId,username,doctorFee,doctor_hospital,
             })
 
         });
         alert("Booking added");
     }
+    
     const available = (date) => {
         for (let i = 0; i < userdata.length; i++) {
             console.log(new Date(userdata[i].Time).getDate());
@@ -83,6 +162,7 @@ const MakeAppointment = () => {
         getslots();
         dates();
     }, []);
+    
 
     const dates = () => {
         var days = [];
@@ -116,20 +196,20 @@ const MakeAppointment = () => {
                     <Grid item xs={8} mt={1}>
                         <Typography variant="h4" color={"inherit"}>{doc.username}</Typography>
                         <Typography variant="h8" color={"text.secondary"}>Available</Typography>
-                        <Typography variant="h6" color={"text.secondary"}>{doc.Degree}</Typography>
-                        <Typography variant="h6" color={"text.secondary"}>{doc.Experience} of experience</Typography>
+                        <Typography variant="h6" color={"text.secondary"}>{inpval.degree}</Typography>
+                        <Typography variant="h6" color={"text.secondary"}>{inpval.Experience} of experience</Typography>
                     </Grid>
                 </Grid>
                 <Grid container m={1}>
                     <Grid item m={1}>
-                        <Chip variant="contained" color="primary" label="ABC Hospital" />
+                        <Chip variant="contained" color="primary" label={inpval.hospital} />
                     </Grid>
-                    <Grid item m={1}>
+                    {/* <Grid item m={1}>
                         <Chip variant="contained" color="primary" label="DEF Hospital" />
                     </Grid>
                     <Grid item m={1}>
                         <Chip variant="contained" color="primary" label="GHI Hospital" />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 <Divider />
                 <Box ml={1} mt={2}>
@@ -185,7 +265,7 @@ const MakeAppointment = () => {
                         <form>
                             <div class="form-group">
                                 <Typography variant="h6" color={"text.secondary"}>Booking Fee</Typography>
-                                <Typography variant="h8" color={"text.secondary"}>Rs 3000</Typography>
+                                <Typography variant="h8" color={"text.secondary"}>Rs {inpval.Fee}</Typography>
                             </div>
                             <div class="form-group">
                                 <Typography variant="h6" color={"text.secondary"}>Date</Typography>

@@ -2,18 +2,25 @@ import React, { useState, useEffect, useContext } from 'react'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { adddata, deldata } from '../context/ContextProvider';
 import { updatedata } from '../context/ContextProvider'
+import jwtDecode from 'jwt-decode';
 
 
 
 const Appointments = () => {
   const [getuserdata, setUserdata] = useState([]);
+  const navigate = useNavigate();
   console.log(getuserdata);
   const shoot = () => {
     alert("Great Shot!");
   }
+  const token = localStorage.getItem('userToken');
+
+    const decodedToken = jwtDecode(token);
+    const PatientID = decodedToken.userId; 
+  
 
   const { udata, setUdata } = useContext(adddata);
 
@@ -64,13 +71,15 @@ const deleteuser = async (id) => {
   }
 }
 
-
+const prescription =()=>{
+  navigate("/medicalrecord")
+}
 
 
 
 
   const getdata = async () => {
-    const res = await fetch("/getMedicines", {
+    const res = await fetch(`/getAllAppointments/${PatientID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -147,25 +156,31 @@ const deleteuser = async (id) => {
                   <tr className="table-dark" style={{ height: "40px" }}>
                     <th scope="col" style={{ fontSize: "17px" }}>Doctor's Name</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Hospital</th>
-                    <th scope="col" style={{ fontSize: "17px" }}>Hospital Address</th>
+                    <th scope="col" style={{ fontSize: "17px" }}>Doctor Fee</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Date</th>
-                    {/* <th scope="col" style={{ fontSize: "17px" }}>Prescription</th> */}
+                    <th scope="col" style={{ fontSize: "17px" }}  >Prescription</th>
                     <th></th>
 
 
                   </tr>
                 </thead>
                 <tbody >
-                <tr >
-                    <td>Doctor Ahmad</td>
-                    <td>Gurki</td>
-                    <td>Jallo Park</td>
-                    <td>29 March 2023</td>
-                    {/* <th scope="col" style={{ fontSize: "17px" }}>Prescription</th> */}
-                    <th></th>
+                {
+  getuserdata.map((element, id) => {
+    return (
+      <>
+        <tr>
+          <td>{element.DoctorName}</td>
+          <td>{element.Hospital}</td>
+          <td>{element.DoctorFee} /-</td>
+          <td>{element.Time}</td>
+          <td style={{ cursor:"pointer" }} onClick={prescription}><RemoveRedEyeIcon/></td>
+        </tr>
 
-
-                  </tr>
+      </>
+    )
+  })
+}
                   
                   </tbody>
                     </table>
@@ -179,36 +194,3 @@ const deleteuser = async (id) => {
 export default Appointments
 
 
-// {
-//   getuserdata.map((element, id) => {
-//     return (
-//       <>
-//         {/* <tr>
-//           <th scope="row">{id + 1}</th>
-//           <td>{element.name}</td>
-//           <td>{element.mg}</td>
-//           <td>{element.type}</td>
-//           <td>{element.quantity}</td>
-//           <td className="d-flex justify-content-between">
-//           <NavLink to={`view/${element.id}`}> <button className="btn btn-success"><RemoveRedEyeIcon /></button></NavLink>
-//             <NavLink to={`editMedicine/${element.id}`}>  <button className="btn btn-primary"><CreateIcon /></button></NavLink>
-//             <button className="btn btn-danger" onClick={() => deleteuser(element.id)}><DeleteOutlineIcon /></button>
-//           </td>
-//         </tr> */}
-
-
-
-
-//         <tr>
-//           <th>Dr Tahir</th>
-//           <td>Shayk Zayed</td>
-//           <td>Allama Iqbal Town</td>
-//           <td>3rd March</td>
-//           <td>Prescription</td>
-//           <td><button className="btn btn-success"><RemoveRedEyeIcon /></button></td>
-          
-//         </tr>
-//       </>
-//     )
-//   })
-// }

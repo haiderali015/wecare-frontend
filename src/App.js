@@ -37,6 +37,9 @@ import SigninAdmin from './components/Admin/SigninAdmin';
 import { useSelector } from 'react-redux';
 import  Spinner  from './components/Spinner';
 import Patientsidenav from './components/Patient/PatientSidenav';
+import AddPharmacy from './components/Admin/AddPharmacy';
+import Editpharmacy from './components/Admin/Editpharmacy';
+import MedicalRecord from './components/Patient/MedicalRecord';
 
 
 const SidebarLayout = () => (
@@ -99,17 +102,22 @@ function App() {
 
             <Route path='/Admin' element={<Admin />} />
 
+            <Route path='/MedicalRecord' element={<MedicalRecord />} />
 
 
 
             <Route path='/makeappointment' element={<MakeAppointment />} />
             <Route path='/Doctor/:id' element={<Doctor render={(params) => ({ ...params })}/>} />
-            <Route path='/Pharmacy' element={<Sidenav />} />
+            <Route path='/pharmacy/:id' element={<Sidenav />} />
             <Route path='/Pharmacy/editMedicine/:id' element={<EditMedicine/>} />
 
             <Route path='/Admin/editDoctor/:id' element={<Edit/>} />
             <Route path='/Admin/AddDoctor' element={<AddDoctor/>}/>
-            <Route path='/booking/:id' element={<Booking render={(params) => ({ ...params })}/>} />
+
+            <Route path='/Admin/editPharmacy/:id' element={<Editpharmacy/>} />
+            <Route path='/Admin/AddPharmacy' element={<AddPharmacy/>}/>
+
+            <Route path='/booking/:id/:username' element={<Booking render={(params) => ({ ...params })}/>} />
             <Route path='/hospitals/:city/:hospital' element={<PatientHome  render={(params) => ({ ...params })}/>} />
             <Route path='/settings' element={<Profilesettings/>} />
             <Route path='/myprofile' element={<PatientProfile/>} />
