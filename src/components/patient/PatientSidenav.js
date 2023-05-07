@@ -35,6 +35,7 @@ import { Button} from '@material-ui/core';
 import Profilesettings from './Profilesettings';
 import PatientHome from './PatientHome';
 import Appointments from "./Appointments"
+import MedicinesRecord from './MedicinesRecord';
 
 
 const drawerWidth = 240;
@@ -121,7 +122,7 @@ export default function Sidenav() {
     
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const[menudata,setmenudata]=useState("Invoice");
+  const[menudata,setmenudata]=useState("Book Doctor");
 
   const handleLogout = () => {
     localStorage.removeItem("userToken");
@@ -168,27 +169,7 @@ export default function Sidenav() {
         </DrawerHeader>
         <Divider />
         <List>
-            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Home")}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                    fontSize:"35px"
-                  }}
-                >
-                 <ReceiptIcon/>
-                </ListItemIcon>
-                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Home"}/>
-              </ListItemButton>
-            </ListItem>
+            
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Appointments")}>
               <ListItemButton
                 sx={{
@@ -208,6 +189,29 @@ export default function Sidenav() {
                  <MedicationIcon/>
                 </ListItemIcon>
                 <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Appointments"}/>
+              </ListItemButton>
+            </ListItem>
+
+
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Medicines Record")}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    fontSize:"35px"
+                  }}
+                >
+                 <MedicationIcon/>
+                </ListItemIcon>
+                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Medicines Record"}/>
               </ListItemButton>
             </ListItem>
 
@@ -293,6 +297,7 @@ export default function Sidenav() {
         {menudata=="Book Doctor" && <PatientHome/>}
         {menudata=="Profile" && <Profilesettings/>}
         {menudata=="Appointments" && <Appointments/>}
+        {menudata=="Medicines Record" && <MedicinesRecord/>}
 
 
       </Box>

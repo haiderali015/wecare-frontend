@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Card, Button ,CardActionArea, CardContent, CardMedia, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, Input, InputLabel, NativeSelect, Radio, RadioGroup, TextField, Typography } from '@mui/material';
+import { Box, Card, Button, CardActionArea, CardContent, CardMedia, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, Input, InputLabel, NativeSelect, Radio, RadioGroup, TextField, Typography } from '@mui/material';
 import doctor1 from '../../assets/doctor1.jpg';
 
 const PatientHome = (props) => {
   const [userdata, setUserdata] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [userToken, setuserToken] = useState(localStorage.getItem('userToken'));
-  const [query,setQuery]=useState("");
+  const [query, setQuery] = useState("");
   const [speciality, setSpeciality] = useState("");
-  const [selectedhospital, sethospital] = useState("");
+  const [selectedHospital, setSelectedHospital] = useState("undefined");
 
   let { city, hospital } = useParams();
   const navigate = useNavigate();
-  
+
   const getdata = async () => {
-    let url = `http://localhost:8001/getDoctors?city=${city}&hospital=${hospital}`;
+    let url = `http://localhost:8001/getDoctors?city=${city}&hospital=${selectedHospital}`;
     if (speciality) {
       url += `&speciality=${speciality}`;
-      console.log(url); 
+      console.log(url);
     }
-    if (selectedhospital) {
-      url += `&hospital=${selectedhospital}`;
-      console.log(url); 
-
-    }
+    
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -37,6 +33,7 @@ const PatientHome = (props) => {
       console.log("error ");
       setUserdata([]);
     } else {
+      console.log("failed data is this  " +data.data);
       setUserdata(data)
     }
   };
@@ -47,11 +44,11 @@ const PatientHome = (props) => {
 
   useEffect(() => {
     getdata();
-  }, [speciality, selectedhospital]);
+  }, [speciality, selectedHospital]);
 
   return (
     <>
-      <Grid xs={12} m={5} style={{marginTop:"50px"}}>
+      <Grid xs={12} m={5} style={{ marginTop: "50px" }}>
         <TextField type="text" placeholder='Search Doctor' className='search' onChange={e => setQuery(e.target.value)} />
       </Grid>
       {city &&
@@ -71,7 +68,7 @@ const PatientHome = (props) => {
                   id: 'uncontrolled-native',
                 }}
                 onChange={(e) => setSpeciality(e.target.value)}
-                
+
               >
                 <option value="">All Specialities</option>
                 <option value="dentist">Dentist</option>
@@ -115,27 +112,26 @@ const PatientHome = (props) => {
               <NativeSelect
                 defaultValue={"All Hospitals"}
                 inputProps={{
-                  name: 'selectedhospital',
+                  name: 'hospital',
                   id: 'uncontrolled-native',
                 }}
-                onChange={(e) => sethospital(e.target.value)}
-                
+                onChange={(e) => setSelectedHospital(e.target.value)}
               >
-                <option value="">All Hospitals</option>
+                <option value="undefined">All Hospitals</option>
                 <option value="Gurki">Gurki</option>
                 <option value="CMH">CMH</option>
                 <option value="Fatima Memorial">Fatima Memorial</option>
                 <option value="Shayk Zayed">Shayk Zayed</option>
-                
+
               </NativeSelect>
             </FormControl>
 
           </Box>
         </Grid>
         <Grid item xs={9}>
-        {userdata.filter((element)=>element.username.toLowerCase().includes(query)).map((each, index) => {
-          return each.name && each.Type.toLowerCase().includes(speciality.toLowerCase()) || each.Type.toLowerCase().includes(speciality.toLowerCase())  ?
-            <Grid item m={5} key={index}>
+          {userdata.filter((element) => element.username.toLowerCase().includes(query)).map((each, index) => {
+            return each.name && each.Type.toLowerCase().includes(speciality.toLowerCase()) || each.Type.toLowerCase().includes(speciality.toLowerCase()) ?
+              <Grid item m={5} key={index}>
                 <Card
                   sx={{
                     display: "flex",
@@ -169,7 +165,7 @@ const PatientHome = (props) => {
                         color="text.secondary"
                         component="div"
                       >
-                        {each.Experience} Years Experience
+                        {each.Experience} Experience
                       </Typography>
                       <Typography
                         variant="h5"
@@ -183,7 +179,7 @@ const PatientHome = (props) => {
                       <Button variant="contained" size='large' sx={{ padding: "10px", margin: "0px 10px" }}>
                         View Profile
                       </Button>
-                      <Button variant="contained" size='large' sx={{ padding: "10px", margin: "0px 10px" }}  onClick={() => { routes(each.Id) }}>
+                      <Button variant="contained" size='large' sx={{ padding: "10px", margin: "0px 10px" }} onClick={() => { routes(each.Id) }}>
                         Quick Appointment
                       </Button>
                     </CardActionArea>

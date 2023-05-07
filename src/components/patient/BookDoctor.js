@@ -117,6 +117,7 @@ const MakeAppointment = () => {
     
     const doctorFee = inpval.Fee;
     const doctor_hospital= inpval.hospital;
+    const Doctor_Name= inpval.username;
     const savedata = async () => {
 
         const res = await fetch(`http://localhost:8001/bookdoc`, {
@@ -125,7 +126,7 @@ const MakeAppointment = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id,bookdate,userId,username,doctorFee,doctor_hospital,
+                id,bookdate,userId,Doctor_Name,doctorFee,doctor_hospital,
             })
 
         });

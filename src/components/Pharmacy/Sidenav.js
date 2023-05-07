@@ -21,15 +21,15 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react';
-import Invoice  from '../Pharmacy/Invoice';
-import CalculateBill  from '../Pharmacy/CalculateBill';
-import AddMedicine  from '../Pharmacy/AddMedicine';
+import Invoice from '../Pharmacy/Invoice';
+import CalculateBill from '../Pharmacy/CalculateBill';
+import AddMedicine from '../Pharmacy/AddMedicine';
 
-import Medicine  from '../Pharmacy/Medicine';
+import Medicine from '../Pharmacy/Medicine';
+import Getprescription from './GetPresc';
 import logo from "./wecarelogo.png";
 import { Button} from '@material-ui/core';
 import { useNavigate } from "react-router-dom";
-
 
 const drawerWidth = 240;
 
@@ -103,6 +103,14 @@ export default function Sidenav() {
   const [open, setOpen] = useState(true);
   const[menudata,setmenudata]=useState("Invoice");
   const [pharmacyToken, setpharmacyToken] = useState(localStorage.getItem('pharmacytoken'));
+  
+  
+  
+  
+  // const token = localStorage.getItem('pharmacytoken');
+  // const decodedToken = jwtDecode(token);
+  // const PharmacyName = decodedToken.name; 
+  
    
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -143,7 +151,7 @@ const navigate = useNavigate()
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List style={{marginTop:"100px"}}>
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Invoice")}>
               <ListItemButton
                 sx={{
@@ -237,6 +245,33 @@ const navigate = useNavigate()
               </ListItemButton>
             </ListItem>
 
+
+
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Get Prescription")}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    fontSize:"35px"
+                  }}
+                >
+                 <MedicationIcon/>
+                </ListItemIcon>
+                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Get Prescription"}/>
+              </ListItemButton>
+            </ListItem>
+
+
+
+
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
               <ListItemButton
                 sx={{
@@ -260,6 +295,10 @@ const navigate = useNavigate()
             </ListItem>
 
 
+
+
+
+
         </List>
         <Divider />
         
@@ -269,7 +308,7 @@ const navigate = useNavigate()
         {menudata=="CalculateBill" && <CalculateBill/>}
         {menudata=="Inventory" && <Medicine/>}
         {menudata=="addMedicine" && <AddMedicine/>}
-
+        {menudata=="Get Prescription" && <Getprescription/>}
 
       </Box>
     </Box>

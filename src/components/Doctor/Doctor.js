@@ -39,10 +39,10 @@ const steps = ['Patient Information', 'Prescription details', 'Review your presc
 const theme = createTheme();
 
 export default function Doctor(props) {
-  const [patient, setPatient] = React.useState({id:"",name:"",Address:"",phonenumber:"",amount:"",cnic:""});
+  const [patient, setPatient] = React.useState({ id: "", name: "", Address: "", phonenumber: "", amount: "", cnic: "" });
   let { id } = useParams();
   const [app, setApp] = React.useState([]);
-  const [precribtion, setPrecribtion] = React.useState({ id: 1, Diagnosis: "", Allergies: "", Medicines: [{ Name: "", Quantity: "", Duration: "",Consumption:"" }], Notes: "" });
+  const [precribtion, setPrecribtion] = React.useState({ id: 1, Diagnosis: "", Allergies: "", Medicines: [{ Name: "", Quantity: "", Duration: "", Consumption: "" }], Notes: "" });
   const getAppoints = async () => {
     const res = await fetch(`http://localhost:8001/appointments/${id}`, {
       method: "GET",
@@ -50,11 +50,11 @@ export default function Doctor(props) {
         "Content-Type": "application/json"
       },
     });
-    const precribtion = await res.json();
-    if (res.status === 422 || !precribtion) {
+    const prec = await res.json();
+    if (res.status === 422 || !prec) {
       console.log("error ");
     } else {
-      setApp(precribtion);
+      setApp(prec);
     }
   }
   const getPatient = async (id) => {
@@ -84,7 +84,7 @@ export default function Doctor(props) {
       case 1:
         return <PaymentForm props={[precribtion, setPrecribtion]} />;
       case 2:
-        return <Review props={[precribtion,patient]}/>;
+        return <Review props={[precribtion, patient]} />;
       default:
         throw new Error('Unknown step');
     }
@@ -92,19 +92,23 @@ export default function Doctor(props) {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-  const handleSubmit=async()=>
-  {
-    const data={appointment_id:id,Diagnosis:precribtion.Diagnosis,Allergies:precribtion.Allergies,Medicines:precribtion.Medicines,Notes:precribtion.Notes,DoctorId:id,UserId:patient.id};
-    const res = await fetch(`http://localhost:8001/doctor_records/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
+  const handleSubmit = async () => {
+    const appointment = app.find(appt => appt.id === patient.id);
+    if (appointment) {
+       // will log the appointment_id of the found object
+      const data = { appointment_id: appointment.appointment_id, Diagnosis: precribtion.Diagnosis, Allergies: precribtion.Allergies, Medicines: precribtion.Medicines, Notes: precribtion.Notes, DoctorId: id, UserId: patient.id };
+      const res = await fetch(`http://localhost:8001/doctor_records/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+    }
+
     // if (res.status === 422 || !precribtion) {
-      // console.log("error ");
+    // console.log("error ");
     // } else {
     // }
   };
@@ -173,7 +177,7 @@ export default function Doctor(props) {
 
                 <Button
                   variant="contained"
-                  onClick={activeStep === steps.length - 1? handleSubmit:handleNext}
+                  onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Finalize' : 'Next'}

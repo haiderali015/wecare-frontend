@@ -29,38 +29,10 @@ export default function MedicalRecord() {
     const decodedToken = jwtDecode(token);
     const userid = decodedToken.userId;
 
-    const getdata = async () => {
-        const res = await fetch(`/getprescription/${userid}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-    
-        const data = await res.json();
-        console.log(data);
-    
-        if (res.status === 422 || !data || data.length === 0) {
-            console.log("error ");
-    
-        } else {
-            setINP(data[0])
-            console.log("get data");
-    
-        }
-    }
-    
-
-    useEffect(() => {
-        getdata();
-        console.log("user id is " + userid + " diagnosis is " + inpval.Diagnosis)
-
-    }, []);
-
 
 
     const getdata2 = async () => {
-        const res = await fetch(`/getAppointment/${userid}`, {
+        const res = await fetch(`/getprescription/${2}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { adddata, deldata } from '../context/ContextProvider';
-import { updatedata } from '../context/ContextProvider'
 import jwtDecode from 'jwt-decode';
 
 
@@ -20,56 +16,7 @@ const Appointments = () => {
 
     const decodedToken = jwtDecode(token);
     const PatientID = decodedToken.userId; 
-  
-
-  const { udata, setUdata } = useContext(adddata);
-
-  const { updata, setUPdata } = useContext(updatedata);
-
-  const { dltdata, setDLTdata } = useContext(deldata);
-
-//   const deleteuser = async (id) => {
-
-//     const res2 = await fetch(`/deleteuser/${id}`, {
-//         method: "DELETE",
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     });
-
-//     const deletedata = await res2.json();
-//     console.log(deletedata);
-
-//     if (res2.status === 422 || !deletedata) {
-//         console.log("error");
-//     } else {
-//         console.log("user deleted");
-//         // setDLTdata(deletedata)
-//         // getdata();
-//     }
-
-// }
-
-
-const deleteuser = async (id) => {
-  const res2 = await fetch(`/deleteuser/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  const deletedata = await res2.json();
-  console.log(deletedata);
-
-  if (res2.status === 422 || !deletedata) {
-    console.log("error");
-  } else {
-    console.log("Medicine deleted");
-    // setDLTdata(deletedata);
-    setUserdata(getuserdata.filter((pharmacy1) => pharmacy1.id !== id)); // remove deleted doctor from state
-  }
-}
+ 
 
 const prescription =()=>{
   navigate("/medicalrecord")
@@ -84,7 +31,8 @@ const prescription =()=>{
       headers: {
         "Content-Type": "application/json"
       }
-    });
+      
+    }, console.log("Patient id is "+ PatientID));
 
     const data = await res.json();
     console.log(data);
@@ -108,39 +56,6 @@ const prescription =()=>{
     
   return (
     <>
-
-    
-      
-
-       {
-        udata ?
-            <>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{udata.name}</strong>  added succesfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </> : ""
-       }
-        {
-        updata ?
-            <>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{updata.name}</strong>  updated succesfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </> : ""
-        }
-
-        {
-        dltdata ?
-            <>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{dltdata.name}</strong>  deleted succesfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={shoot}></button>
-                </div>
-            </> : ""
-        }
-
 
           <div className="mt-5">
           <div className='heading'>
