@@ -40,7 +40,8 @@ import Patientsidenav from './components/Patient/PatientSidenav';
 import AddPharmacy from './components/Admin/AddPharmacy';
 import Editpharmacy from './components/Admin/Editpharmacy';
 import MedicalRecord from './components/Patient/MedicalRecord';
-
+import Reviewdoc from './components/Patient/Reviewdoc';
+import Review from './components/Admin/ReviewsPage';
 
 const SidebarLayout = () => (
   <>
@@ -90,6 +91,7 @@ function App() {
             <Route path='/signin' element={<Signin />} />
             <Route path='/contactus' element={<ContactUs />} />
             <Route path='/WelcomePage' element={<WelcomePage />} />
+            <Route path='/reviewsDoctor/:id' element={<Review />} />
 
             <Route path='/signinPharmacy' element={<SignInPharmacy />} />
             <Route path='/signinDoctor' element={<SigninDoctor />} />
@@ -97,12 +99,12 @@ function App() {
 
             <Route path='/patienthome' element={<PatientHome/>} />
             <Route path='/patienthomepage' element={<Patientsidenav/>} />
-
+            <Route path='/reviewdoc/:id' element={<Reviewdoc/>} />
             <Route path='/doctordetails' element={<DoctorDetails />} />
 
             <Route path='/Admin' element={<Admin />} />
 
-            <Route path='/MedicalRecord' element={<MedicalRecord />} />
+            <Route path='/MedicalRecord/:id' element={<MedicalRecord />} />
             <Route path='/makeappointment' element={<MakeAppointment />} />
             <Route path='/Doctor/:id' element={<Doctor render={(params) => ({ ...params })}/>} />
             <Route path='/pharmacy/:id' element={<Sidenav />} />
@@ -120,6 +122,10 @@ function App() {
             <Route path='/myprofile' element={<PatientProfile/>} />
 
             <Route path='/DoctorLogin' element={<DoctorSignin />} />
+
+
+
+
 
             <Route path="/bill" element={<CalculateBill />} /> 
         </Routes>

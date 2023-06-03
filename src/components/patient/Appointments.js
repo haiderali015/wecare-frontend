@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { NavLink, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-
+import { Button } from '@mui/material';
 
 
 const Appointments = () => {
@@ -18,8 +18,11 @@ const Appointments = () => {
     const PatientID = decodedToken.userId; 
  
 
-const prescription =()=>{
-  navigate("/medicalrecord")
+const prescription =(id)=>{
+  navigate(`/medicalrecord/${id}`)
+}
+const review =(id)=>{
+  navigate(`/reviewdoc/${id}`)
 }
 
 
@@ -70,13 +73,12 @@ const prescription =()=>{
                 <thead>
                   <tr className="table-dark" style={{ height: "40px" }}>
                     <th scope="col" style={{ fontSize: "17px" }}>Doctor's Name</th>
+                    <th scope="col" style={{ fontSize: "17px" }}>PID</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Hospital</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Doctor Fee</th>
                     <th scope="col" style={{ fontSize: "17px" }}>Date</th>
+                    <th scope="col" style={{ fontSize: "17px" }}  >Reviews</th>
                     <th scope="col" style={{ fontSize: "17px" }}  >Prescription</th>
-                    <th></th>
-
-
                   </tr>
                 </thead>
                 <tbody >
@@ -86,10 +88,12 @@ const prescription =()=>{
       <>
         <tr>
           <td>{element.DoctorName}</td>
+          <td>{element.PatientId}</td>
           <td>{element.Hospital}</td>
           <td>{element.DoctorFee} /-</td>
           <td>{element.Time}</td>
-          <td style={{ cursor:"pointer" }} onClick={prescription}><RemoveRedEyeIcon/></td>
+          <td><Button onClick={()=>review(element.Id)}>review</Button></td>
+          <td style={{ cursor:"pointer" }} onClick={()=>prescription(element.Id)}><RemoveRedEyeIcon/></td>
         </tr>
 
       </>

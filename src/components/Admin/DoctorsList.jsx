@@ -6,6 +6,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { NavLink } from 'react-router-dom';
 import { adddata, deldata } from '../context/ContextProvider';
 import { updatedata } from '../context/ContextProvider'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Button from 'react-bootstrap/Button';
 import "./doctorlist.css"
 
@@ -63,6 +64,11 @@ const DoctorsList = () => {
     getdata();
   }, [])
 
+
+  const reviewPage =(id)=>{
+    navigate(`/reviewsDoctor/${id}`)
+  }
+  
   const handleAddDoctorClick = () => {
     navigate("/Admin/AddDoctor");
   };
@@ -119,6 +125,7 @@ const DoctorsList = () => {
               <th>CNIC</th>
               <th>City</th>
               <th>Hospital Id</th>
+              <th>Reviews</th>
               <th>Password</th>
               <th scope="col" style={{ fontSize: "17px" }}></th>
 
@@ -135,6 +142,7 @@ const DoctorsList = () => {
                 <td>{element.cnic}</td>
                 <td>{element.city}</td>
                 <td>{element.HospitalId}</td>
+                <td style={{ cursor:"pointer" }} onClick={()=>reviewPage(element.Id)}><RemoveRedEyeIcon/></td>
                 <td> {"**Confidential**"} </td>
 
                 <td className="d-flex justify-content-between">

@@ -36,25 +36,19 @@ export default function GetPresc() {
   const [date, setdate] = useState('');
   const [PID, setPID] = useState('');
   const [error, setError] = useState(null);
-  const [showPresc, setShowPresc] = useState(false);
+  const [data,setData]=useState(Array);
+   const [showPresc, setShowPresc] = useState(false);
 
   const GetPresc = async (event) => {
     event.preventDefault();
     console.log(PID + ' ' + date);
-    try {
-      const userData = await Axios.post('http://localhost:8001/getprescpharmacy', {
+    const userData = await Axios.post('http://localhost:8001/getprescpharmacy', {
         Time: date,
         UserID: PID,
       });
-      if (userData.data.code === 200) {
+        console.log(userData.data.data);
+        setData(userData.data.data);
         setShowPresc(true);
-      } else {
-        setError('UserID and Time do not match');
-      }
-    } catch (error) {
-      console.log(error);
-      setError('An error occurred. Please try again.');
-    }
   };
 
   return (
@@ -116,7 +110,7 @@ export default function GetPresc() {
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            {showPresc && <GetUserPresc />}
+            {showPresc && <GetUserPresc  data={data}/>}
         </Box>
       </ThemeProvider>
 

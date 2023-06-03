@@ -5,39 +5,39 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
-export default function GetUserPresc() {
+export default function GetUserPresc(props) {
+    console.log(props);
+    const [getuserdata, setUserdata] = useState(props.data);
 
-    const [getuserdata, setUserdata] = useState([]);
+    // const getdata2 = async () => {
+    //     const res = await fetch(`/getprescriptiondown/${1}`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     });
 
-    const getdata2 = async () => {
-        const res = await fetch(`/getprescriptiondown/${1}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+    //     const data = await res.json();
+    //     console.log(data);
 
-        const data = await res.json();
-        console.log(data);
+    //     if (res.status === 422 || !data) {
+    //         console.log("error ");
 
-        if (res.status === 422 || !data) {
-            console.log("error ");
+    //     } else {
+    //         setUserdata(data)
+    //         console.log("get data");
 
-        } else {
-            setUserdata(data)
-            console.log("get data");
+    //     }
 
-        }
+    // }
 
-    }
-
-    useEffect(() => {
-        getdata2();
-    }, [])
+    // useEffect(() => {
+    //     getdata2();
+    // }, [])
 
 
     return (
-        <Card sx={{ maxWidth: 600, margin: 20 }}>
+        <Card sx={{ minWidth: 600, margin: 20 }}>
             <h1 style={{ fontWeight: 100 }}>Prescription</h1>
 
             <CardMedia

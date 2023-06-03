@@ -80,7 +80,7 @@ const PatientList = () => {
               <td>{element.name}</td>
               <td>{element.cnic}</td>
               <td>{element.phonenumber}</td>
-              <td>{element.password.substring(0, 10)+"..."}</td>
+              <td>*****</td>
               <td className="d-flex justify-content-between">
                   <button className="btn btn-danger" onClick={() => deleteuser(element.id)}><DeleteOutlineIcon /></button>
               </td>

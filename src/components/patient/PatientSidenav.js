@@ -36,6 +36,7 @@ import Profilesettings from './Profilesettings';
 import PatientHome from './PatientHome';
 import Appointments from "./Appointments"
 import MedicinesRecord from './MedicinesRecord';
+import DiseaseAnalysis from './DiseaseAnalysis';
 
 
 const drawerWidth = 240;
@@ -266,6 +267,30 @@ export default function Sidenav() {
             </ListItem>
 
 
+
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>setmenudata("Disease Analysis")}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    fontSize:"35px"
+                  }}
+                >
+                 <MedicationIcon/>
+                </ListItemIcon>
+                <ListItemText primaryTypographyProps={{fontSize: '20px'}} primary={"Disease Analysis"}/>
+              </ListItemButton>
+            </ListItem>
+
+
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
               <ListItemButton
                 sx={{
@@ -289,6 +314,11 @@ export default function Sidenav() {
             </ListItem>
 
 
+
+
+
+
+
         </List>
         <Divider />
         
@@ -298,7 +328,7 @@ export default function Sidenav() {
         {menudata=="Profile" && <Profilesettings/>}
         {menudata=="Appointments" && <Appointments/>}
         {menudata=="Medicines Record" && <MedicinesRecord/>}
-
+        {menudata=="Disease Analysis" && <DiseaseAnalysis/>}
 
       </Box>
     </Box>
