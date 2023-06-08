@@ -53,9 +53,7 @@ const NavbarAdmin = () => {
             <li>
               <NavLink to="/Admin/AddPharmacy">Add Pharmacy</NavLink>
             </li>
-            <li>
-              <NavLink to="/stats">Check Stats</NavLink>
-            </li>
+            
 
               {shouldShowBackIcon && (
               <li>
